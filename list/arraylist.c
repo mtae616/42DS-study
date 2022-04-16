@@ -20,7 +20,7 @@ ArrayList* createArrayList(int maxElementCount)
 
 int addALElement(ArrayList* pList, int position, ArrayListNode element)
 {
-    if (pList->maxElementCount <= position)
+    if (pList->maxElementCount <= position) // max 넘겨 node 추가할 때
         return (FALSE);
     pList->pElement[position] = element;
     pList->currentElementCount += 1;
