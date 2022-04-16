@@ -25,18 +25,6 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 	
 	if (!pList)
 		return (FALSE);
-	// if (position == 0 && pList->currentElementCount == 0) // header
-	// {
-	// 	pList->headerNode = element;
-	// 	pList->currentElementCount = 1;
-	// 	pList->headerNode.pLink = NULL;
-	// 	return (TRUE);
-	// }
-	// else if (position == 0 && pList->currentElementCount != 0)
-	// {
-
-	// }
-
 	if(position == 0)
 	{
 		if (pList->currentElementCount == 0)
@@ -46,21 +34,21 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 			pList->headerNode.pLink = NULL;
 			return (TRUE);
 		}
-		else
-		{
-			// element.pLink = &(pList->headerNode);
-			// pList->headerNode = element;
-			//s~
-			curr = malloc(sizeof(ListNode));
-			curr->data = element.data;
-			// curr->pLink = pList->headerNode;
-			// prev->pLink = curr;
-			curr->pLink = &(pList->headerNode);
-			pList->headerNode = *curr;
-			pList->currentElementCount += 1;
-			//e
-			return (TRUE);
-		}
+		// else working on allocate header node
+		// {
+		// 	// element.pLink = &(pList->headerNode);
+		// 	// pList->headerNode = element;
+		// 	//s~
+		// 	curr = malloc(sizeof(ListNode));
+		// 	curr->data = element.data;
+		// 	// curr->pLink = pList->headerNode;
+		// 	// prev->pLink = curr;
+		// 	curr->pLink = &(pList->headerNode);
+		// 	pList->headerNode = *curr;
+		// 	pList->currentElementCount += 1;
+		// 	//e
+		// 	return (TRUE);
+		// }
 	}
 	buf = &(pList->headerNode);
 	i = 0;
@@ -237,7 +225,7 @@ int main()
 	addLLElement(temp, 1, b); // 1
 	addLLElement(temp, 2, c); // 3
 	addLLElement(temp, 3, d); // 4
-	addLLElement(temp, 0, e); // 19
+	// addLLElement(temp, 0, e); // 19
 	
 	ListNode *buf = &(temp->headerNode);
 
@@ -246,7 +234,7 @@ int main()
 		printf("%d\n", buf->data);
 		buf = buf->pLink;
 	}
-	// removeLLElement(temp, 1);
+	removeLLElement(temp, 3);
 	// ListNode *aa = getLLElement(temp, 1);
 	// printf("thats what im talking about %d\n", aa->data);
 	// clearLinkedList(temp);
