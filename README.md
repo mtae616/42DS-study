@@ -2,7 +2,7 @@
 
 <br />
 
-## mentor : Eunjong Park @42Seuoul
+## Mentor : Eunjong Park @42Seuoul
 
 <br />
 
