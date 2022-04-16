@@ -17,31 +17,30 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 {
 	int		i;
 	ListNode	*buf;
-	// ListNode	*new;
+	ListNode	*curr;
 	
 	if (!pList)
 		return (FALSE);
 	i = 0;
-	if (pList->currentElementCount == 0)
+	if (pList->currentElementCount == 0) // header
 	{
 		pList->headerNode = element;
-		pList->currentElementCount = 1;
+		pList->currentElementCount += 1;
 		pList->headerNode.pLink = NULL;
 		return (TRUE);
 	}
 	buf = &(pList->headerNode);
-	while(buf)
+	i = 1;
+	while(buf->pLink != NULL)
 	{
 		buf = buf->pLink;
 		i++;
 	}
-	// new = malloc(sizeof(ListNode));
-	// new->data = element.data;
-	// new->pLink = NULL;
-	// printf("%d %d\n", i, position);
-	if (position == i)
+	if (position == i) // Nodes
 	{
-		buf->pLink = &element;
+		curr = malloc(sizeof(ListNode));
+		curr->data = element.data;
+		buf->pLink = curr;
 		pList->currentElementCount += 1;
 		return (TRUE);
 	}
@@ -60,42 +59,44 @@ int removeLLElement(LinkedList* pList, int position)
 		return (FALSE);
 	i = 0;
 	buf = &(pList->headerNode);
-	if (position == 0)
+	if (position == 0) // header
 	{
-		if (!(buf->pLink))
+		if (!(buf->pLink)) // dosent have a next one
 		{
 			buf->data = 0;
 			buf->pLink = NULL;
 			return (TRUE);
 		}
-		else
+		else // have a next one
 		{
 			buf->data = 0;
 			pList->headerNode = *(buf->pLink);
 			return (TRUE);
 		}
 	}
-	while (buf && i < position)
+	while (buf != NULL && i < position)
 	{
 		if (i + 1 == position)
 			prev = buf;
 		buf = buf->pLink;
 		i++;
 	}
-	if (buf && i == position)
+	if (buf && i == position) // non header
 	{
-		if (!(buf->pLink))
+		if (!(buf->pLink)) // dosent have a next one
 		{
 			buf->data = 0;
 			buf->pLink = NULL;
+			free(buf);
 			return (TRUE);
 		}
-		else
+		else // have a next one
 		{
 			next = buf->pLink;
 			prev->pLink = next;
 			buf->data = 0;
 			buf->pLink = NULL;
+			free(buf);
 			return (TRUE);
 		}
 	}
@@ -138,6 +139,29 @@ int getLinkedListLength(LinkedList* pList)
 	return (pList->currentElementCount);
 }
 
+void deleteLinkedList(LinkedList* pList)
+{
+	size_t	i;
+	ListNode *buf;
+	ListNode *next;
+
+	buf = pList->headerNode.pLink;
+	i = 1;
+	while(i + 2 < pList->currentElementCount)
+	{
+		next = buf->pLink;
+		buf->data = 0;
+		buf->pLink = NULL;
+		free(buf);
+		buf = next;
+		i++;
+	}
+	pList->currentElementCount = 0;
+	pList->headerNode.data = 0;
+	pList->headerNode.pLink = NULL;
+	free(pList);
+}	
+
 int main()
 {
 	LinkedList *temp;
@@ -172,19 +196,16 @@ int main()
 		printf("%d\n", buf->data);
 		buf = buf->pLink;
 	}
-	printf("the lenth %d\n", temp->currentElementCount);
-
 	// ListNode *aa = getLLElement(temp, 1);
 	// printf("%d\n", aa->data);
-	clearLinkedList(temp);
-	
+	// clearLinkedList(temp);
 	buf = &(temp->headerNode);
-
+	deleteLinkedList(temp);
 	while(buf)
 	{
 		printf("%d\n", buf->data);
 		buf = buf->pLink;
 	}
-
+	printf("the length %d\n", getLinkedListLength(temp));
 	return 0;
 }
