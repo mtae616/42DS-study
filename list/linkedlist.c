@@ -84,7 +84,6 @@ int removeLLElement(LinkedList* pList, int position)
 			buf->data = 0;
 			buf->pLink = NULL;
 			pList->currentElementCount -= 1;
-			return (TRUE);
 		}
 		else // have a next one
 		{
@@ -93,8 +92,8 @@ int removeLLElement(LinkedList* pList, int position)
 			pList->headerNode = *next;
 			next = NULL;
 			pList->currentElementCount -= 1;
-			return (TRUE);
 		}
+		return (TRUE);
 	}
 	while (buf != NULL && i < position)
 	{
@@ -107,11 +106,11 @@ int removeLLElement(LinkedList* pList, int position)
 	{
 		if (!(buf->pLink)) // dosent have a next one
 		{
+			prev->pLink = NULL;
 			buf->data = 0;
 			buf->pLink = NULL;
 			free(buf);
 			pList->currentElementCount -= 1;
-			return (TRUE);
 		}
 		else // have a next one
 		{
@@ -121,10 +120,11 @@ int removeLLElement(LinkedList* pList, int position)
 			buf->pLink = NULL;
 			free(buf);
 			pList->currentElementCount -= 1;
-			return (TRUE);
 		}
+		return (TRUE);
 	}
-	return (FALSE);
+	else
+		return (FALSE);
 }
 
 ListNode* getLLElement(LinkedList* pList, int position)
@@ -143,7 +143,8 @@ ListNode* getLLElement(LinkedList* pList, int position)
 	}
 	if (buf && i == position)
 		return (buf);
-	return (NULL);
+	else
+		return (NULL);
 }
 
 void clearLinkedList(LinkedList* pList)
@@ -228,7 +229,7 @@ int main()
 		printf("%d\n", buf->data);
 		buf = buf->pLink;
 	}
-	removeLLElement(temp, 3);
+	removeLLElement(temp, 4);
 	// ListNode *aa = getLLElement(temp, 1);
 	// printf("thats what im talking about %d\n", aa->data);
 	// clearLinkedList(temp);
@@ -241,5 +242,6 @@ int main()
 		buf = buf->pLink;
 	}
 	printf("the length %d\n", getLinkedListLength(temp));
+
 	return 0;
 }
