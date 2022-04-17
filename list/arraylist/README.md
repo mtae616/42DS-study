@@ -28,7 +28,7 @@ C에서는 라이브러리로 배열리스트를 지원하지 않기 때문에,
 
 ## 생성
 
-```
+```C
 typedef struct ArrayListNodeType // List에 들어갈 Node
 {
     int data;
@@ -44,7 +44,7 @@ typedef struct ArrayListType
 
 위와 같이 헤더를 선언하여, list를 생성한다.
 
-```
+```C
 ArrayList* createArrayList(int maxElementCount) // ArrayList 생성
 {
     ArrayList *buf;
@@ -63,7 +63,7 @@ ArrayList* createArrayList(int maxElementCount) // ArrayList 생성
 
 ## 추가
 
-```
+```C
 int addALElement(ArrayList* pList, int position, ArrayListNode element) // ArrayList node 추가
 {
     int i;
@@ -88,7 +88,7 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element) // Array
 
 ## 탐색
 
-```
+```C
 ArrayListNode* getALElement(ArrayList* pList, int position) // 원소의 주소 반환
 {
 
@@ -101,7 +101,7 @@ O(1) 의 속도를 갖는다.
 
 ## 개별 삭제
 
-```
+```C
 int removeALElement(ArrayList* pList, int position) // 원소를 지운다.
 {
     int i;
@@ -126,7 +126,7 @@ O(N)으로 Linked List와 비교하여 단점을 지닌다.
 
 ## 전체 삭제
 
-```
+```C
 
 void clearArrayList(ArrayList* pList) // 내부 원소들을 지운다.
 {
