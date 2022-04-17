@@ -7,12 +7,14 @@ ArrayList* createArrayList(int maxElementCount)
 {
     ArrayList *buf;
 
-    buf = malloc(sizeof(ArrayList *));
-    if (!buf)
-        return(FALSE);
-    buf->pElement = malloc(sizeof(int) * maxElementCount + 1);
-    if (!(buf->pElement))
+    if (maxElementCount < 0)
         return (FALSE);
+    buf = malloc(sizeof(ArrayList *));
+    // if (!buf)
+    //     return(FALSE);
+    buf->pElement = malloc(sizeof(int) * maxElementCount);
+    // if (!(buf->pElement))
+    //     return (FALSE);
     buf->maxElementCount = maxElementCount;
     buf->currentElementCount = 0;
     return (buf);
@@ -20,39 +22,50 @@ ArrayList* createArrayList(int maxElementCount)
 
 int addALElement(ArrayList* pList, int position, ArrayListNode element)
 {
+    int i;
+
     if (pList->maxElementCount <= position) // max 넘겨 node 추가할 때
         return (FALSE);
-    pList->pElement[position] = element;
+    if (pList->maxElementCount < pList->currentElementCount) // 원소 + 1 <= maxCount
+        return (FALSE);
+    i = pList->currentElementCount + 1;
+    while(i >= position) {
+        pList->pElement[i].data = pList->pElement[i-1].data;
+        i--;
+    }
+    pList->pElement[position].data = element.data;
     pList->currentElementCount += 1;
     return (TRUE);
 }
 
 ArrayListNode* getALElement(ArrayList* pList, int position)
 {
-    ArrayListNode *buf;
-
-    buf = malloc(sizeof(ArrayListNode *));
-    if (!buf)
-        return (NULL);
-    buf->data = pList->pElement[position].data;
-    return (buf);
+    
+    return &(pList->pElement[position]);
 }
 
 int isArrayListFull(ArrayList* pList)
 {
     if (!pList)
         return (FALSE);
-    if (pList->maxElementCount == pList->currentElementCount)
-        return (TRUE);
-    else
-        return (FALSE);
+    return (pList->maxElementCount == pList->currentElementCount);
 }
 
 int removeALElement(ArrayList* pList, int position)
 {
+    int i;
+
     if (!pList)
         return (FALSE);
+    i = position;
     pList->pElement[position].data = 0;
+    while (i <= pList->currentElementCount - 1)
+    {
+        pList->pElement[i].data = pList->pElement[i + 1].data;
+        i++;
+    }
+    pList->pElement[i].data = 0;
+    pList->currentElementCount -= 1;
     return (TRUE);
 }
 
@@ -113,6 +126,8 @@ void clearArrayList(ArrayList* pList)
         i++;
     }
     pList->currentElementCount = 0;
+    free(pList->pElement);
+    pList->pElement = NULL;
 }
 
 int getArrayListLength(ArrayList* pList)
@@ -124,8 +139,9 @@ void deleteArrayList(ArrayList* pList)
 {
     if (!pList)
         return ;
-    free(pList->pElement);
+    clearArrayList(pList);
     free(pList);
+    pList = NULL;
 }
 
 int main()
@@ -135,30 +151,39 @@ int main()
     ArrayListNode c;
     ArrayListNode d;
     ArrayListNode e;
+    ArrayListNode f;
     ArrayListNode *b;
 
     a.data = 5;
     c.data = 99;
     d.data = 123;
     e.data = 888;
+    f.data = 777;
+
     new_one = createArrayList(50);
     printf("%d\n", new_one->maxElementCount);
+
     addALElement(new_one, 0, a);
     addALElement(new_one, 1, c);
     addALElement(new_one, 2, d);
     addALElement(new_one, 3, e);
+    addALElement(new_one, 4, f);
+
+    deleteArrayList(new_one);
+
+    // addALElement(new_one, 0, a);
 
     // printf("%d\n", new_one->pElement[0].data);
-    b = getALElement(new_one, 0);
-    // printf("%d\n", b->data);
+    // b = getALElement(new_one, 0);
+    // printf("the data is %d\n", b->data);
     displayArrayList(new_one);
     // deleteArrayList(new_one);
     // clearArrayList(new_one);
-    printf("%d\n", new_one->pElement[3].data);
-    printf("the length is %d\n", getArrayListLength(new_one));
-    removeALElement(new_one, 2);
-    printf("%d\n", new_one->pElement[2].data);
+    // printf("%d\n", new_one->pElement[3].data);
+    // printf("the length is %d\n", getArrayListLength(new_one));
+    // removeALElement(new_one, 2);
+    // printf("%d\n", new_one->pElement[2].data);
     // free(new_one);
-    free(b);
+    // free(b);
     return 0;
 }

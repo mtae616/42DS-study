@@ -130,21 +130,13 @@ int removeLLElement(LinkedList* pList, int position)
 ListNode* getLLElement(LinkedList* pList, int position)
 {
 	ListNode *buf;
-	size_t	i;
 
-	if (!pList)
-		return (FALSE);
+    if (!(position >= 0 && position <= pList->currentElementCount))
+        return (FALSE);
 	buf = &(pList->headerNode);
-	i = 0;
-	while(buf && i < position)
-	{
+	while(position--)
 		buf = buf->pLink;
-		i++;
-	}
-	if (buf && i == position)
-		return (buf);
-	else
-		return (NULL);
+    return (buf);
 }
 
 void clearLinkedList(LinkedList* pList)
@@ -158,11 +150,12 @@ void clearLinkedList(LinkedList* pList)
 		next = buf->pLink;
 		buf->data = 0x00;
 		free(buf);
+        buf = NULL;
 		buf = next;
 	}
 	pList->headerNode.data = 0x00;
-	pList->currentElementCount = 0;
 	pList->headerNode.pLink = NULL;
+	pList->currentElementCount = 0;
 }
 
 int getLinkedListLength(LinkedList* pList)
@@ -172,22 +165,9 @@ int getLinkedListLength(LinkedList* pList)
 
 void deleteLinkedList(LinkedList* pList)
 {
-	ListNode *buf;
-	ListNode *next;
-
-	buf = pList->headerNode.pLink;
-	while(buf)
-	{
-		next = buf->pLink;
-		buf->data = 0x00;
-		buf->pLink = NULL;
-		free(buf);
-		buf = next;
-	}
-	pList->headerNode.data = 0x00;
-	pList->currentElementCount = 0x00;
-	pList->headerNode.pLink = NULL;
+	clearLinkedList(pList);
 	free(pList);
+    pList = NULL;
 }	
 
 int main()
