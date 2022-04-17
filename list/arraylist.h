@@ -1,6 +1,10 @@
 #ifndef _ARRAYLIST_
 #define _ARRAYLIST_
 
+// malloc, write
+#include <stdlib.h>
+#include <unistd.h>
+
 typedef struct ArrayListNodeType
 {
 	int data;

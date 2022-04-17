@@ -1,45 +1,40 @@
 #include "linkedlist.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-LinkedList* createLinkedList()
+LinkedList* createLinkedList() // Linked list 생성
 {
 	LinkedList* buf;
 
 	buf = malloc(sizeof(LinkedList));
-	if (!buf)
-		return (NULL);
 	buf->currentElementCount = 0;
 	buf->headerNode.data = 0;
 	buf->headerNode.pLink = NULL;
 	return (buf);
 }
 
-int addLLElement(LinkedList* pList, int position, ListNode element)
+int addLLElement(LinkedList* pList, int position, ListNode element) // Node 추가
 {
 	int		i;
 	ListNode	*buf;
 	ListNode	*curr;
 	ListNode	*prev;
 	
-	if (!pList)
+	if (position < 0)
 		return (FALSE);
 	if(position == 0)
 	{
-		if (pList->currentElementCount == 0) // dosent have a header
+		if (pList->currentElementCount == 0) // Header Node가 없을 때
 		{
 			pList->headerNode = element;
 			pList->currentElementCount = 1;
 			pList->headerNode.pLink = NULL;
 		}
-		else // have a header
+		else // Header Node가 있을 때
 		{
-			curr = malloc(sizeof(ListNode));
+			curr = malloc(sizeof(ListNode)); // 원래 header 의 데이터 복사
 			curr->data = pList->headerNode.data;
 			curr->pLink = pList->headerNode.pLink;
-			element.pLink = curr;
-			pList->headerNode = element;
+			element.pLink = curr; // 새로 들어온 element를 헤더로 바꾸기 위해 복사한 포인터를 next로 지칭
+			pList->headerNode = element; // 새로 들어온 element를 헤더로 바꿔준다.
 			pList->currentElementCount += 1;
 		}
 		return (TRUE);
@@ -48,17 +43,17 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 	i = 0;
 	while(buf && i < position)
 	{
-		if (i + 1 == position)
+		if (i + 1 == position) // 새로 들어올 node를 위해 position 이전의 node의 주소를 저장한다.
 			prev = buf;
 		buf = buf->pLink;
 		i++;
 	}
-	if (position == i) // Nodes
+	if (position == i) // Node 추가
 	{
-		curr = malloc(sizeof(ListNode));
+		curr = malloc(sizeof(ListNode)); // node 추가를 위한 데이터 복사
 		curr->data = element.data;
-		curr->pLink = buf;
-		prev->pLink = curr;
+		curr->pLink = buf; // 원래 위치의 node를 밀어내로
+		prev->pLink = curr; // 원래 node 전의 node 의 next로 연결한다.
 		pList->currentElementCount += 1;
 		return (TRUE);
 	}
@@ -66,30 +61,30 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 		return (FALSE);
 }
 
-int removeLLElement(LinkedList* pList, int position)
+int removeLLElement(LinkedList* pList, int position) // node를 지운다.
 {
 	size_t		i;
 	ListNode	*buf;
 	ListNode	*prev;
 	ListNode	*next;
 
-	if (!pList)
+	if (!(position >= 0 && position < pList->currentElementCount))
 		return (FALSE);
 	i = 0;
 	buf = &(pList->headerNode);
-	if (position == 0) // header
+	if (position == 0) // Header Node일 때
 	{
-		if (!(buf->pLink)) // dosent have a next one
+		if (!(buf->pLink)) // Header Node 의 Next가 없을 때
 		{
 			buf->data = 0x00;
 			buf->pLink = NULL;
 			pList->currentElementCount -= 1;
 		}
-		else // have a next one
+		else // Header Node 의 Next가 있을 때
 		{
 			buf->data = 0x00;
 			next = buf->pLink;
-			pList->headerNode = *next;
+			pList->headerNode = *next; // Header Node Next로 교체한다.
 			next = NULL;
 			pList->currentElementCount -= 1;
 		}
@@ -102,44 +97,34 @@ int removeLLElement(LinkedList* pList, int position)
 		buf = buf->pLink;
 		i++;
 	}
-	if (buf && i == position) // non header
+	if (buf && i == position) // Header Node가 아닐 때
 	{
-		if (!(buf->pLink)) // dosent have a next one
-		{
-			prev->pLink = NULL;
-			buf->data = 0x00;
-			buf->pLink = NULL;
-			free(buf);
-			pList->currentElementCount -= 1;
-		}
-		else // have a next one
-		{
-			next = buf->pLink;
-			prev->pLink = next;
-			buf->data = 0x00;
-			buf->pLink = NULL;
-			free(buf);
-			pList->currentElementCount -= 1;
-		}
+		next = buf->pLink; // 현재 위치 다음 것을
+		prev->pLink = next; // 현재 위치 전의 것에 연결해준다.
+		buf->data = 0x00;
+		buf->pLink = NULL;
+		free(buf);
+		pList->currentElementCount -= 1;
 		return (TRUE);
 	}
 	else
 		return (FALSE);
 }
 
-ListNode* getLLElement(LinkedList* pList, int position)
+ListNode* getLLElement(LinkedList* pList, int position) // 원하는 위치의 Node를 얻는다.
 {
 	ListNode *buf;
 
+	// 위치가 음수인 것과 현재 엘리먼트 갯수보다 큰 위치의 노드는 없다!
     if (!(position >= 0 && position <= pList->currentElementCount))
         return (FALSE);
 	buf = &(pList->headerNode);
-	while(position--)
+	while(position--) // position 만큼 이동한다.
 		buf = buf->pLink;
     return (buf);
 }
 
-void clearLinkedList(LinkedList* pList)
+void clearLinkedList(LinkedList* pList) // 내부 Node를 전부 없애준다.
 {
 	ListNode *buf;
 	ListNode *next;
@@ -158,69 +143,14 @@ void clearLinkedList(LinkedList* pList)
 	pList->currentElementCount = 0;
 }
 
-int getLinkedListLength(LinkedList* pList)
+int getLinkedListLength(LinkedList* pList) // list 내부 Node의 개수 return
 {
 	return (pList->currentElementCount);
 }
 
-void deleteLinkedList(LinkedList* pList)
+void deleteLinkedList(LinkedList* pList) // List와 Node를 제거한다.
 {
 	clearLinkedList(pList);
 	free(pList);
     pList = NULL;
 }	
-
-int main()
-{
-	LinkedList *temp;
-	
-	ListNode a;
-	ListNode b;
-	ListNode c;
-	ListNode d;
-	ListNode e;
-
-	a.data = 5;
-	a.pLink = NULL;
-
-	b.data = 1;
-	b.pLink = NULL;
-
-	c.data = 3;
-	c.pLink = NULL;
-
-	d.data = 4;
-	d.pLink = NULL;
-
-	e.data = 19;
-	e.pLink = NULL;
-
-	temp = createLinkedList();
-	addLLElement(temp, 0, a); // 5 
-	addLLElement(temp, 1, b); // 1
-	addLLElement(temp, 2, c); // 3
-	addLLElement(temp, 3, d); // 4
-	addLLElement(temp, 0, e); // 19
-	
-	ListNode *buf = &(temp->headerNode);
-
-	while(buf)
-	{
-		printf("%d\n", buf->data);
-		buf = buf->pLink;
-	}
-	removeLLElement(temp, 4);
-	// ListNode *aa = getLLElement(temp, 1);
-	// printf("thats what im talking about %d\n", aa->data);
-	clearLinkedList(temp);
-	printf("==================remove header=======\n");
-	buf = &(temp->headerNode);
-	// deleteLinkedList(temp);
-	while(buf)
-	{
-		printf("%d\n", buf->data);
-		buf = buf->pLink;
-	}
-	printf("the length %d\n", getLinkedListLength(temp));
-	return 0;
-}

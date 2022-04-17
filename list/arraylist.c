@@ -1,26 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "arraylist.h"
 
-ArrayList* createArrayList(int maxElementCount)
+ArrayList* createArrayList(int maxElementCount) // ArrayList 생성
 {
     ArrayList *buf;
 
     if (maxElementCount < 0)
         return (FALSE);
     buf = malloc(sizeof(ArrayList *));
-    // if (!buf)
-    //     return(FALSE);
     buf->pElement = malloc(sizeof(int) * maxElementCount);
-    // if (!(buf->pElement))
-    //     return (FALSE);
     buf->maxElementCount = maxElementCount;
     buf->currentElementCount = 0;
     return (buf);
 }
 
-int addALElement(ArrayList* pList, int position, ArrayListNode element)
+int addALElement(ArrayList* pList, int position, ArrayListNode element) // ArrayList node 추가
 {
     int i;
 
@@ -28,40 +21,40 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element)
         return (FALSE);
     if (pList->maxElementCount < pList->currentElementCount) // 원소 + 1 <= maxCount
         return (FALSE);
-    i = pList->currentElementCount + 1;
+    i = pList->currentElementCount + 1; // node 추가를 위한 인덱싱
     while(i >= position) {
-        pList->pElement[i].data = pList->pElement[i-1].data;
+        pList->pElement[i].data = pList->pElement[i - 1].data; // 원래 값들을 한 칸 뒤로 이동시킨다.
         i--;
     }
-    pList->pElement[position].data = element.data;
+    pList->pElement[position].data = element.data; // position 에 원하는 값 입력
     pList->currentElementCount += 1;
     return (TRUE);
 }
 
-ArrayListNode* getALElement(ArrayList* pList, int position)
+ArrayListNode* getALElement(ArrayList* pList, int position) // 원소의 주소 반환
 {
     
-    return &(pList->pElement[position]);
+    return &(pList->pElement[position]); // 원하는 위치의 주소값 반환
 }
 
-int isArrayListFull(ArrayList* pList)
+int isArrayListFull(ArrayList* pList) // list 꽉 찼는지 여부
 {
     if (!pList)
         return (FALSE);
     return (pList->maxElementCount == pList->currentElementCount);
 }
 
-int removeALElement(ArrayList* pList, int position)
+int removeALElement(ArrayList* pList, int position) // 원소 지운다.
 {
     int i;
 
     if (!pList)
         return (FALSE);
     i = position;
-    pList->pElement[position].data = 0;
+    pList->pElement[position].data = 0; // position의 값 지운 후
     while (i <= pList->currentElementCount - 1)
     {
-        pList->pElement[i].data = pList->pElement[i + 1].data;
+        pList->pElement[i].data = pList->pElement[i + 1].data; // 값들을 앞으로 땡긴다.
         i++;
     }
     pList->pElement[i].data = 0;
@@ -89,7 +82,7 @@ void ft_putnbr(int n)
 	write(1, &c, 1);
 }
 
-void displayArrayList(ArrayList* pList)
+void displayArrayList(ArrayList* pList) // 모든 원소 출력
 {
     size_t  i;
 
@@ -113,7 +106,7 @@ void displayArrayList(ArrayList* pList)
     }
 }
 
-void clearArrayList(ArrayList* pList)
+void clearArrayList(ArrayList* pList) // 원소를 지운다.
 {
     size_t  i;
 
@@ -130,60 +123,16 @@ void clearArrayList(ArrayList* pList)
     pList->pElement = NULL;
 }
 
-int getArrayListLength(ArrayList* pList)
+int getArrayListLength(ArrayList* pList) // List length 반환
 {
     return (pList->currentElementCount);
 }
 
-void deleteArrayList(ArrayList* pList)
+void deleteArrayList(ArrayList* pList) // 모든 원소와 list를 지운다.
 {
     if (!pList)
         return ;
     clearArrayList(pList);
     free(pList);
     pList = NULL;
-}
-
-int main()
-{
-    ArrayList *new_one;
-    ArrayListNode a;
-    ArrayListNode c;
-    ArrayListNode d;
-    ArrayListNode e;
-    ArrayListNode f;
-    ArrayListNode *b;
-
-    a.data = 5;
-    c.data = 99;
-    d.data = 123;
-    e.data = 888;
-    f.data = 777;
-
-    new_one = createArrayList(50);
-    printf("%d\n", new_one->maxElementCount);
-
-    addALElement(new_one, 0, a);
-    addALElement(new_one, 1, c);
-    addALElement(new_one, 2, d);
-    addALElement(new_one, 3, e);
-    addALElement(new_one, 4, f);
-
-    deleteArrayList(new_one);
-
-    // addALElement(new_one, 0, a);
-
-    // printf("%d\n", new_one->pElement[0].data);
-    // b = getALElement(new_one, 0);
-    // printf("the data is %d\n", b->data);
-    displayArrayList(new_one);
-    // deleteArrayList(new_one);
-    // clearArrayList(new_one);
-    // printf("%d\n", new_one->pElement[3].data);
-    // printf("the length is %d\n", getArrayListLength(new_one));
-    // removeALElement(new_one, 2);
-    // printf("%d\n", new_one->pElement[2].data);
-    // free(new_one);
-    // free(b);
-    return 0;
 }

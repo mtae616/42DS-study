@@ -1,6 +1,9 @@
 #ifndef _LINKEDLIST_
 #define _LINKEDLIST_
 
+// malloc
+#include <stdlib.h>
+
 typedef struct ListNodeType
 {
 	int data;
