@@ -27,13 +27,13 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 		return (FALSE);
 	if(position == 0)
 	{
-		if (pList->currentElementCount == 0)
+		if (pList->currentElementCount == 0) // dosent have a header
 		{
 			pList->headerNode = element;
 			pList->currentElementCount = 1;
 			pList->headerNode.pLink = NULL;
 		}
-		else
+		else // have a header
 		{
 			curr = malloc(sizeof(ListNode));
 			curr->data = pList->headerNode.data;
