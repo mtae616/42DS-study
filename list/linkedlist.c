@@ -32,23 +32,17 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 			pList->headerNode = element;
 			pList->currentElementCount = 1;
 			pList->headerNode.pLink = NULL;
-			return (TRUE);
 		}
-		// else working on allocate header node
-		// {
-		// 	// element.pLink = &(pList->headerNode);
-		// 	// pList->headerNode = element;
-		// 	//s~
-		// 	curr = malloc(sizeof(ListNode));
-		// 	curr->data = element.data;
-		// 	// curr->pLink = pList->headerNode;
-		// 	// prev->pLink = curr;
-		// 	curr->pLink = &(pList->headerNode);
-		// 	pList->headerNode = *curr;
-		// 	pList->currentElementCount += 1;
-		// 	//e
-		// 	return (TRUE);
-		// }
+		else
+		{
+			curr = malloc(sizeof(ListNode));
+			curr->data = pList->headerNode.data;
+			curr->pLink = pList->headerNode.pLink;
+			element.pLink = curr;
+			pList->headerNode = element;
+			pList->currentElementCount += 1;
+		}
+		return (TRUE);
 	}
 	buf = &(pList->headerNode);
 	i = 0;
@@ -225,7 +219,7 @@ int main()
 	addLLElement(temp, 1, b); // 1
 	addLLElement(temp, 2, c); // 3
 	addLLElement(temp, 3, d); // 4
-	// addLLElement(temp, 0, e); // 19
+	addLLElement(temp, 0, e); // 19
 	
 	ListNode *buf = &(temp->headerNode);
 
