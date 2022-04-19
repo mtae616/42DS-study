@@ -14,27 +14,66 @@ void deleteDoublyList(DoublyList* pList)
 
 }
 
+void check_error_up()
+{
+
+}
+
 int addDLElement(DoublyList* pList, int position, DoublyListNode element)
 {
 	DoublyListNode *buf;
 	DoublyListNode *new;
 
-	buf = getDLElement(pList, position);
 	new = (DoublyListNode *)calloc(1, sizeof(DoublyListNode));
-	new = &element;
-	new->pRLink = buf;
-	new->pLLink = buf->pLLink;
-	buf->pLLink->pRLink = new;
+	new->data = element.data;
+	if (pList->currentElementCount == 0)
+	{
+		pList->headerNode.pRLink = new;
+		new->pLLink = new;
+		new->pRLink = new;
+		pList->currentElementCount = 1;
+	}
+	else
+	{
+		buf = getDLElement(pList, position - 1);
+		new->pLLink = buf;
+		buf->pRLink->pLLink= new;
+		new->pRLink = buf->pRLink;
+		buf->pRLink = new;
+		pList->currentElementCount += 1;
+	}
+	return (TRUE);
 }
 
 int removeDLElement(DoublyList* pList, int position)
 {
+    DoublyListNode *buf;
 
+	buf = getDLElement(pList, position);
+    buf->pLLink->pRLink = buf->pRLink;
+    buf->pRLink->pLLink = buf->pLLink;
+    free(buf);
+    buf = NULL;
+    pList->currentElementCount--;
+
+    return (TRUE);
 }
 
 void clearDoublyList(DoublyList* pList)
 {
+    DoublyListNode  *buf;
+    DoublyListNode  *next;
 
+    buf = pList->headerNode.pRLink;
+    while (buf)
+    {
+        next = buf->pRLink;
+        buf->data = 0;
+        buf->pLLink = NULL;
+        buf->pRLink = NULL;
+        free(buf);
+        buf = next;
+    }
 }
 
 int getDoublyListLength(DoublyList* pList)
@@ -50,7 +89,6 @@ DoublyListNode* getDLElement(DoublyList* pList, int position)
 	while (position--) {
 		buf = buf->pRLink;
 	}
-
 	return(buf);
 }
 
@@ -61,8 +99,8 @@ void displayDoublyList(DoublyList* pList)
 
 	i = -1;
 	buf = pList->headerNode.pRLink;
-	while (++i <= pList->currentElementCount) {
-		printf("pList[%d] = %d",i, buf->data);
+	while (++i < pList->currentElementCount) {
+		printf("pList[%d] = %d\n",i, buf->data);
 		buf = buf->pRLink;
 	}
 }
@@ -81,20 +119,16 @@ int main()
 
 	a.data = 1;
 	a.pLLink = NULL;
-	a.pRLink = &b;
-
-	temp->headerNode.pRLink = &a;
-	
+	a.pRLink = NULL;
+	addDLElement(temp, 0, a);
 	b.data = 2;
-	b.pLLink = &a;
-	b.pRLink = &c;
-
+	b.pLLink = NULL;
+	b.pRLink = NULL;
+	addDLElement(temp, 1, b);
 	c.data = 3;
-	c.pLLink = &b;
+	c.pLLink = NULL;
 	c.pRLink = NULL;
-
-	d = malloc(sizeof(DoublyListNode));
-	d = getDLElement(temp, 2);
-	printf("%d", d->data);
+	addDLElement(temp, 2, c);
+	displayDoublyList(temp);
 	
 }
