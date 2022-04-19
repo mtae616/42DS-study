@@ -16,7 +16,15 @@ void deleteDoublyList(DoublyList* pList)
 
 int addDLElement(DoublyList* pList, int position, DoublyListNode element)
 {
+	DoublyListNode *buf;
+	DoublyListNode *new;
 
+	buf = getDLElement(pList, position);
+	new = (DoublyListNode *)calloc(1, sizeof(DoublyListNode));
+	new = &element;
+	new->pRLink = buf;
+	new->pLLink = buf->pLLink;
+	buf->pLLink->pRLink = new;
 }
 
 int removeDLElement(DoublyList* pList, int position)
