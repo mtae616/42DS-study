@@ -3,6 +3,8 @@
 
 // malloc
 #include <stdlib.h>
+// printf
+#include <stdio.h>
 
 typedef struct ListNodeType
 {

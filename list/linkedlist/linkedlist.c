@@ -154,3 +154,15 @@ void deleteLinkedList(LinkedList* pList) // List와 Node를 제거한다.
 	free(pList);
     pList = NULL;
 }	
+
+void displayLinkedList(LinkedList* pList)
+{
+	ListNode *buf;
+
+	buf = &(pList->headerNode);
+	while(buf)
+	{
+		printf("the data is : %d\n", buf->data);
+		buf = buf->pLink;
+	}
+}
