@@ -119,8 +119,6 @@ void clearArrayList(ArrayList* pList) // 원소를 지운다.
         i++;
     }
     pList->currentElementCount = 0;
-    free(pList->pElement);
-    pList->pElement = NULL;
 }
 
 int getArrayListLength(ArrayList* pList) // List length 반환
