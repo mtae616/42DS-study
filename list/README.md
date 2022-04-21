@@ -1,6 +1,9 @@
 # Lists
-- <a href="https://github.com/mtae616/42DS-study/tree/master/list/arraylist">ArrayList</a>
-- <a href="https://github.com/mtae616/42DS-study/tree/master/list/linkedlist">singly LinkedList</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/list/arraylist">Array List</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/list/linkedlist">singly Linked List</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/list/circularlist">Circular List</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/list/doublylist">Doubly Linked List</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/list/polynomial">Polynomial</a>
 
 <br />
 

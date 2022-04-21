@@ -13,3 +13,4 @@
 | week | topic | Date |
 | :----: | :-----: | :----: |
 | 1 | <a href="https://github.com/mtae616/42DS-study/tree/master/list">Arraylist, linked list</a> | 22.04.19 |
+| 2 | <a href="https://github.com/mtae616/42DS-study/tree/master/list">Circular List, Doubly list, Polynomial</a> | 22.04.22 |
