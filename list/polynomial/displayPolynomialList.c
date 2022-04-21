@@ -1,6 +1,6 @@
 #include "polynomial.h"
 
-void	displayPLLinkedList(LinkedList *pList)
+void	displayPLLinkedList(LinkedList *pList) // 내부 node 전부를 보여준다.
 {
 	ListNode	*head;
 	int			idx = pList->currentElementCount;

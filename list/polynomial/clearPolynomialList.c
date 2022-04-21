@@ -1,6 +1,6 @@
 #include "polynomial.h"
 
-void	clearPolynomialList(LinkedList *pList)
+void	clearPolynomialList(LinkedList *pList) // 내부 node를 전부 삭제한다.
 {
 	ListNode	*headNode;
 	ListNode	*nextNode;

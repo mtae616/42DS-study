@@ -1,6 +1,5 @@
-#ifndef _LINKEDLIST_
-#define _LINKEDLIST_
-
+#ifndef _POLYNOIMIAL_
+#define _POLYNOIMIAL_
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,15 +18,15 @@ typedef struct LinkedListType
 	ListNode headerNode;		// 헤더 노드(Header Node)
 } LinkedList;
 
-LinkedList* createPolynomialList();
-int addPLElement(LinkedList* pList, ListNode element);
-int	removePLElement(LinkedList *pList, int position);
+LinkedList*	createPolynomialList();
+int			addPLElement(LinkedList* pList, ListNode element);
+int			removePLElement(LinkedList *pList, int position);
 ListNode	*getPLElement(LinkedList* pList, int position);
 
-void	clearPolynomialList(LinkedList *pList);
-int	getPolynomialListLength(LinkedList *pList);
-void	deletePolynomialList(LinkedList *pList);
-void	displayPLLinkedList(LinkedList *pList);
+void		clearPolynomialList(LinkedList *pList);
+int			getPolynomialListLength(LinkedList *pList);
+void		deletePolynomialList(LinkedList *pList);
+void		displayPLLinkedList(LinkedList *pList);
 LinkedList	*plus(LinkedList *aList, LinkedList *bList);
 LinkedList	*minus(LinkedList *aList, LinkedList *bList);
 #endif

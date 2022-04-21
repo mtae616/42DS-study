@@ -1,6 +1,6 @@
 #include "polynomial.h"
 
-LinkedList	*createPolynomialList()
+LinkedList	*createPolynomialList() // list를 생성한다.
 {
 	LinkedList	*lst;
 
