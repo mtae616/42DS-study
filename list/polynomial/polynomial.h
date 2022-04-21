@@ -29,6 +29,7 @@ void		deletePolynomialList(LinkedList *pList);
 void		displayPLLinkedList(LinkedList *pList);
 LinkedList	*plus(LinkedList *aList, LinkedList *bList);
 LinkedList	*minus(LinkedList *aList, LinkedList *bList);
+void		alloc_calc_node(LinkedList *new_list, LinkedList *base_list, int flag);
 #endif
 
 #ifndef _COMMON_LIST_DEF_
