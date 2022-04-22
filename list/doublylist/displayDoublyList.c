@@ -1,6 +1,6 @@
 #include "doublylist.h"
 
-void	displayDoublyList(DoublyList *pList)
+void	displayDoublyList(DoublyList *pList) // node 전부 출력
 {
 	int				i;
 	DoublyListNode	*buf;

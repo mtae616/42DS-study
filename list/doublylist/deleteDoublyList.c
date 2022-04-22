@@ -1,6 +1,6 @@
 #include "doublylist.h"
 
-void	deleteDoublyList(DoublyList *pList)
+void	deleteDoublyList(DoublyList *pList) // list 까지 생성
 {
 	NULLCHECK(pList);
 	clearDoublyList(pList);
