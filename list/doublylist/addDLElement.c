@@ -5,6 +5,8 @@ int addDLElement(DoublyList	*pList, int position, DoublyListNode element)
 	DoublyListNode *buf;
 	DoublyListNode *new;
 
+	if (position < 0 || pList->currentElementCount < position)
+        return (FALSE);
 	new = (DoublyListNode *)calloc(1, sizeof(DoublyListNode));
 	NULLCHECK(new);
 	new->data = element.data;
