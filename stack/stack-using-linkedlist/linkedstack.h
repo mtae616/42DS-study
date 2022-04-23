@@ -1,6 +1,9 @@
 #ifndef _LINKED_STACK_
 #define _LINKED_STACK_
 
+#include <stdio.h>
+#include <stdlib.h>
+
 typedef struct StackNodeType
 {
 	char data;
