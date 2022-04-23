@@ -3,18 +3,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "./arraylist/arraylist.h"
 
 typedef struct StackNodeType
 {
 	char data;
-	struct StackNodeType* pLink;
 } StackNode;
 
 typedef struct ArrayStackType
 {
-	int currentElementCount;	// 현재 노드 개수
-	StackNode* pTopElement;		// Top node
+	int maxElementCount;		// 최대 원소 개수
+	int currentElementCount;	// 현재 원소의 개수
+	StackNode* pElement;		// Top node
 } ArrayStack;
 
 ArrayStack* createArrayStack();
