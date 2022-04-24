@@ -33,9 +33,3 @@ int checkBracketMatching(char *str)
     }
     return (buf->currentElementCount > 0 ? (FALSE) : (TRUE));
 }
-
-int main()
-{
-    int a = checkBracketMatching("((A * B) / C) - {(D + E) && (F - G )}");
-    printf("%d", a);
-}
