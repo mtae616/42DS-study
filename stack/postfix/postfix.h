@@ -2,6 +2,7 @@
 #define _POSTFIX_H_
 
 #include "./stack-using-linkedlist/linkedstack.h"
+#include "./calculate/calculate.h"
 
 // macro func
 #define IS_DIGIT(x) ('0' <= x && x <= '9')

@@ -1,6 +1,6 @@
 #include "postfix.h"
 
-int priotity(char *str, LinkedStack *stack, StackNode *temp)
+int priotity(char *lst, LinkedStack *stack, StackNode *temp, int *i)
 {
     temp = peekLS(stack);
     if (!temp)
@@ -16,6 +16,10 @@ int priotity(char *str, LinkedStack *stack, StackNode *temp)
             {
                 temp = popLS(stack);
                 printf("%c ", temp->data);
+                lst[*i] = temp->data;
+                *i += 1;
+                lst[*i] = ' ';
+                *i += 1;
             }
             else
                 break ;
@@ -24,16 +28,34 @@ int priotity(char *str, LinkedStack *stack, StackNode *temp)
     return (1);
 }
 
-int convert_postfix(char *str)
+int check_up_len(char *str)
+{
+    int i = 0;
+    while(*str)
+    {
+        if (*str != '(' && *str != ')')
+            i++;
+        str++;
+    }
+    return (i);
+}
+
+char    *convert_postfix(char *str)
 {
     LinkedStack *stack = createLinkedStack();
     StackNode   *buf = calloc(1, sizeof(StackNode));
     StackNode   *temp;
+    char        *lst = calloc(check_up_len(str), sizeof(char));
+    int         i = 0;
 
     while(*str)
     {
         if (IS_DIGIT(*str))
+        {
+            lst[i++] = *str;
+            lst[i++] = ' ';
             printf("%c ", *str);
+        }
         else if (IS_CLOSE(*str))
         {
             temp = peekLS(stack);
@@ -42,11 +64,13 @@ int convert_postfix(char *str)
                 temp = popLS(stack);
                 if (temp->data == '(')
                     break ;
+                lst[i++] = temp->data;
+                lst[i++] = ' ';
                 printf("%c ", temp->data);
             }
         }
         if (*str == '+' || *str == '-')
-            priotity(str, stack, temp);
+            priotity(lst, stack, temp, &i);
         if (IS_OPER(*str) || IS_OPEN(*str))
         {
             buf->data = *str;
@@ -59,6 +83,8 @@ int convert_postfix(char *str)
         temp = popLS(stack);
         if (!temp)
             break ;
+        lst[i++] = temp->data;
+        lst[i++] = ' ';
         printf("%c ", temp->data);
     }
     free(stack);
@@ -66,12 +92,13 @@ int convert_postfix(char *str)
     stack = NULL;
     buf = NULL;
     printf("\n");
-    return (0);
+    return (lst);
 }
 
 int main()
 {
-    convert_postfix("2 * (3 + 4) + (6 * 9)");
     convert_postfix("2 - (3 + 4) * 5");
+    int res = calcExpr(convert_postfix("2 * (3 + 4) + (6 * 9)"));
+    printf("%d", res);
     return 0;
 }
