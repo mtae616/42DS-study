@@ -1,6 +1,6 @@
 #include "calculate.h"
 
-int	caclulate(LinkedStack *stack, char oper)
+int	calculate(LinkedStack *stack, char oper)
 {
 	int		a;
 	int		b;
@@ -24,7 +24,7 @@ int	caclulate(LinkedStack *stack, char oper)
 	return (res);
 }
 
-int caclExpr(char *expr)
+int calcExpr(char *expr)
 {
 	LinkedStack	*stack;
 	int			res;
@@ -46,7 +46,7 @@ int caclExpr(char *expr)
 		{
 			if (stack->currentElementCount >= 2)
 			{
-				res = caclulate(stack, *expr);
+				res = calculate(stack, *expr);
 				buf->data = res;
 				pushLS(stack, *buf);
 			}
@@ -72,7 +72,7 @@ int caclExpr(char *expr)
 int main()
 {
 	char str[] = "2 3 +wer -";
-	int res = caclExpr(str);
+	int res = calcExpr(str);
 	printf("%d\n", res);
 	return 0;
 }
