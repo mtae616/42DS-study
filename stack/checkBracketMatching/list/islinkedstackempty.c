@@ -1,6 +1,6 @@
-#include "arraystack.h"
+#include "linkedstack.h"
 
-int isArrayStackEmpty(ArrayStack* pStack)
+int isLinkedStackEmpty(LinkedStack* pStack)
 {
     return (pStack->currentElementCount == 0 ? (TRUE) : (FALSE));
 }

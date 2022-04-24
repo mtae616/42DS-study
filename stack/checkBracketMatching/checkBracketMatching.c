@@ -1,8 +1,8 @@
-#include "./list/arraystack.h"
+#include "./list/linkedstack.h"
 
 int checkBracketMatching(char *str)
 {
-    ArrayStack  *buf = createArrayStack(100);
+    LinkedStack  *buf = createLinkedStack();
     StackNode   temp;
     char        c;
 
@@ -11,11 +11,11 @@ int checkBracketMatching(char *str)
         if (*str == '(' || *str == '{' || *str == '[')
         {
             temp.data = *str;
-            pushAS(buf, temp);
+            pushLS(buf, temp);
         }
         else if(*str == ')' || *str == '}' || *str == ']')
         {
-            temp = *popAS(buf);
+            temp = *popLS(buf);
             c = temp.data;
             if (!c)
                 return (FALSE);
@@ -32,4 +32,10 @@ int checkBracketMatching(char *str)
         str++;
     }
     return (buf->currentElementCount > 0 ? (FALSE) : (TRUE));
+}
+
+int main()
+{
+    int a = checkBracketMatching("((A * B) / C) - {(D + E) && (F - G )}");
+    printf("%d", a);
 }
