@@ -1,6 +1,6 @@
 #include "calculate.h"
 
-int	calculate(LinkedStack *stack, char oper)
+static int	calculate(LinkedStack *stack, char oper)
 {
 	int		a;
 	int		b;
