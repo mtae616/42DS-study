@@ -5,6 +5,8 @@ StackNode* popLS(LinkedStack* pStack)
     StackNode   *buf;
     StackNode   *delNode;
 
+    if(!(pStack->pTopElement))
+        return (NULL);
     buf = calloc(1, sizeof(StackNode));
     buf->data = pStack->pTopElement->data;
     delNode = pStack->pTopElement;
