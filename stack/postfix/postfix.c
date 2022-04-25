@@ -78,6 +78,7 @@ char    *convert_postfix(char *str)
         }
         str++;
     }
+    temp = peekLS(stack);
     while(temp)
     {
         temp = popLS(stack);
@@ -87,7 +88,7 @@ char    *convert_postfix(char *str)
         lst[i++] = ' ';
         printf("%c ", temp->data);
     }
-    free(stack);
+    deleteLinkedStack(stack);
     free(buf);
     stack = NULL;
     buf = NULL;
@@ -98,6 +99,7 @@ char    *convert_postfix(char *str)
 int main()
 {
     convert_postfix("2 - (3 + 4) * 5");
+    convert_postfix("2 + 3 * 9 / 7");
     int res = calcExpr(convert_postfix("2 * (3 + 4) + (6 * 9)"));
     printf("%d", res);
     return 0;
