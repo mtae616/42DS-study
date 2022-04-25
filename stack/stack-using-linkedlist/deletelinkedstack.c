@@ -1,6 +1,6 @@
 #include "linkedstack.h"
 
-void deleteLinkedStack(LinkedStack* pStack)
+void deleteLinkedStack(LinkedStack* pStack) // stack 제거
 {
     StackNode   *buf;
     StackNode   *next;

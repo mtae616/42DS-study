@@ -1,6 +1,6 @@
 #include "linkedstack.h"
 
-StackNode* popLS(LinkedStack* pStack)
+StackNode* popLS(LinkedStack* pStack) // 맨 위 노드 반환
 {
     StackNode   *buf;
     StackNode   *delNode;
@@ -11,7 +11,7 @@ StackNode* popLS(LinkedStack* pStack)
     buf->data = pStack->pTopElement->data;
     delNode = pStack->pTopElement;
     delNode->data = 0;
-    pStack->pTopElement = delNode->pLink;
+    pStack->pTopElement = delNode->pLink; // header 갱신
     delNode->pLink = NULL;
     free(delNode);
     delNode = NULL;

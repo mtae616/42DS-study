@@ -1,6 +1,6 @@
 #include "arraystack.h"
 
-StackNode* popAS(ArrayStack* pStack)
+StackNode* popAS(ArrayStack* pStack) // 맨 위 노드 반환
 {
     StackNode   *buf;
 	
