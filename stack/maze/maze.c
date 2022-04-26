@@ -16,7 +16,6 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
         x = temp->data.x;
         y = temp->data.y;
         dir = temp->data.direction;
-        free(temp);
         while(dir < 4 && !exit)
         {
             int new_y = y + DIRECTION_OFFSETS[dir][0];
@@ -45,6 +44,7 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
             else
                 dir++;
         }
+        free(temp);
     }
     temp = pStack->pTopElement;
     for(int i = 0; i < pStack->currentElementCount; i++)
@@ -110,8 +110,8 @@ int main()
     endpos.direction = 0;
 
     findPath(mazeArray, startpos, endpos, pStack);    
-    printMaze(mazeArray);
-    free(pStack);
-    system("leaks a.out");
+    // printMaze(mazeArray);
+    // free(pStack);
+    // system("leaks a.out");
     return 0;
 }
