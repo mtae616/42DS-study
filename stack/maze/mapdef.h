@@ -19,7 +19,7 @@ static int DIRECTION_OFFSETS[NUM_DIRECTIONS][2] = {
 enum PosStatus { NOT_VISIT = 0, WALL = 1 , VISIT = 2  };
 
 void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPost, MapPosition endPos, LinkedStack *pStack);
-int pushLSMapPosition(LinkedStack *pStack, int y, int x, int direction);
+int pushLSMapPosition(LinkedStack *pStack, MapPosition node);
 void printMaze(int mazeArray[HEIGHT][WIDTH]);
 
 #endif
