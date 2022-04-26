@@ -9,13 +9,14 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
     int         dir, x, y;
 
     pushLSMapPosition(pStack, startPos);
-    marked_map[startPos.x][startPos.y] = 1;
+    marked_map[startPos.x][startPos.y] = TRUE;
     while(!exit)
     {
         temp = popLS(pStack);
         x = temp->data.x;
         y = temp->data.y;
         dir = temp->data.direction;
+        free(temp);
         while(dir < 4 && !exit)
         {
             int new_y = y + DIRECTION_OFFSETS[dir][0];
@@ -29,9 +30,9 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
                 exit = TRUE;
                 pushLSMapPosition(pStack, buf);
             }
-            else if(mazeArray[new_y][new_x] == 0 && marked_map[new_y][new_x] == 0)
+            else if(mazeArray[new_y][new_x] == FALSE && marked_map[new_y][new_x] == FALSE)
             {
-                marked_map[new_y][new_x] = 1;
+                marked_map[new_y][new_x] = TRUE;
                 buf.x = new_x;
                 buf.y = new_y;
                 buf.direction = dir++;
@@ -110,26 +111,7 @@ int main()
 
     findPath(mazeArray, startpos, endpos, pStack);    
     printMaze(mazeArray);
+    free(pStack);
+    system("leaks a.out");
     return 0;
 }
-
-
-// dir = 0;
-// while(dir < 4)
-// {
-//     if (startPos.y + DIRECTION_OFFSETS[dir][0] >= 0 && startPos.x + DIRECTION_OFFSETS[dir][1] >= 0)
-//     {
-//         if (!(mazeArray[startPos.y + DIRECTION_OFFSETS[dir][0]][startPos.x + DIRECTION_OFFSETS[dir][1]]))
-//         {
-//             startPos.y += DIRECTION_OFFSETS[dir][0];
-//             startPos.x += DIRECTION_OFFSETS[dir][1];
-//             mazeArray[startPos.y][startPos.x] = 2;
-//             pushLSMapPosition(pStack, startPos.y, startPos.x, dir);
-//         }
-//         // else
-//         //     popLS(pStack);
-//     }
-//     dir++;
-
-    // }
-// startPos.x += j;
