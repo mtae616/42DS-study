@@ -1,5 +1,30 @@
 #include "mapdef.h"
 
+void    stack_swap(LinkedStack *pStack)
+{
+    LinkedStack *new_stack = createLinkedStack();
+    StackNode   *temp;
+    StackNode   *next;
+
+    for(int idx = pStack->currentElementCount; idx > 0; idx--)
+    {
+        temp = popLS(pStack);
+        next = temp->pLink;
+        pushLSMapPosition(new_stack, temp->data);
+        free(temp);
+        temp = next;
+    }
+    for(int idx = new_stack->currentElementCount; idx > 0; idx--)
+    {
+        temp = popLS(new_stack);
+        next = temp->pLink;
+        printf("%d %d\n", temp->data.y, temp->data.x);
+        free(temp);
+        temp = next;
+    }
+    deleteLinkedStack(new_stack);
+}
+
 void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition endPos, LinkedStack *pStack)
 {
     int         exit = FALSE;
@@ -16,6 +41,7 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
         x = temp->data.x;
         y = temp->data.y;
         dir = temp->data.direction;
+        mazeArray[y][x] = 0;
         while(dir < 4 && !exit)
         {
             int new_y = y + DIRECTION_OFFSETS[dir][0];
@@ -24,7 +50,7 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
             {
                 buf.x = new_x;
                 buf.y = new_y;
-                buf.direction = dir++;
+                buf.direction = dir;
                 temp->data = buf;
                 exit = TRUE;
                 pushLSMapPosition(pStack, buf);
@@ -34,10 +60,11 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
                 marked_map[new_y][new_x] = TRUE;
                 buf.x = new_x;
                 buf.y = new_y;
-                buf.direction = dir++;
+                buf.direction = dir;
                 temp->data = buf;
                 x = new_x;
                 y = new_y;
+                mazeArray[y][x] = 2;
                 pushLSMapPosition(pStack, buf);
                 dir = 0;
             }
@@ -46,12 +73,7 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
         }
         free(temp);
     }
-    temp = pStack->pTopElement;
-    for(int i = 0; i < pStack->currentElementCount; i++)
-    {
-        printf("\n%d %d\n", temp->data.y, temp->data.x);
-        temp = temp->pLink;
-    }
+    stack_swap(pStack);
 }
 
 int pushLSMapPosition(LinkedStack *pStack, MapPosition node)
@@ -79,12 +101,9 @@ void printMaze(int mazeArray[HEIGHT][WIDTH])
     }
 }
 
-
-// enum PosStatus { NOT_VISIT = 0, WALL = 1 , VISIT = 2  };
-
 int main()
 {
-    LinkedStack *pStack = calloc(1, sizeof(LinkedStack));
+    LinkedStack *pStack;
     // y, x
     pStack = createLinkedStack();
     int mazeArray[8][8] = {
@@ -101,7 +120,7 @@ int main()
 
     startpos.y = 0;
     startpos.x = 0;
-    startpos.direction = 2;
+    startpos.direction = 0;
 
     MapPosition endpos;
 
@@ -110,8 +129,9 @@ int main()
     endpos.direction = 0;
 
     findPath(mazeArray, startpos, endpos, pStack);    
-    // printMaze(mazeArray);
-    // free(pStack);
-    // system("leaks a.out");
+    printMaze(mazeArray);
+    deleteLinkedStack(pStack);
+
+    system("leaks a.out");
     return 0;
 }
