@@ -33,14 +33,6 @@ void    stack_swap(LinkedStack *pStack)
         temp = next;
     }
     showPath(new_stack);
-    for(int idx = new_stack->currentElementCount; idx > 0; idx--)
-    {
-        temp = popLS(new_stack);
-        next = temp->pLink;
-        printf("%d %d\n", temp->data.y, temp->data.x);
-        free(temp);
-        temp = next;
-    }
     deleteLinkedStack(new_stack);
 }
 
