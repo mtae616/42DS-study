@@ -25,13 +25,18 @@ void    stack_swap(LinkedStack *pStack)
     deleteLinkedStack(new_stack);
 }
 
+int is_valid(int x, int y)
+{
+    return (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT);
+}
+
 void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition endPos, LinkedStack *pStack)
 {
     int         exit = FALSE;
     int         marked_map[HEIGHT][WIDTH] = {0, };
     StackNode   *temp;
     MapPosition buf;
-    int         dir, x, y;
+    int         dir = 0, x = 0, y = 0;
 
     pushLSMapPosition(pStack, startPos);
     marked_map[startPos.x][startPos.y] = TRUE;
@@ -44,11 +49,14 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
         mazeArray[y][x] = 0;
         while(dir < 4 && !exit)
         {
-            int new_y = y + DIRECTION_OFFSETS[dir][0];
-            int new_x = x + DIRECTION_OFFSETS[dir][1];
+            int new_y = y + DIRECTION_OFFSETS[dir][1];
+            int new_x = x + DIRECTION_OFFSETS[dir][0];
             if (new_y == endPos.y && new_x == endPos.x)
+            {
+                mazeArray[new_y][new_x] = 2;
                 exit = TRUE;
-            else if(mazeArray[new_y][new_x] == FALSE && marked_map[new_y][new_x] == FALSE)
+            }
+            else if(mazeArray[new_y][new_x] == FALSE && marked_map[new_y][new_x] == FALSE && is_valid(new_x, new_y))
             {
                 marked_map[new_y][new_x] = TRUE;
                 buf.x = new_x;
