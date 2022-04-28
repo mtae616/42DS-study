@@ -15,5 +15,6 @@ void deleteLinkedStack(LinkedStack* pStack) // stack 제거
         buf = NULL;
         buf = next;
     }
+    free(pStack);
     pStack->pTopElement = NULL;
 }
