@@ -11,6 +11,7 @@ void    stack_swap(LinkedStack *pStack)
         temp = popLS(pStack);
         next = temp->pLink;
         pushLSMapPosition(new_stack, temp->data);
+        printf("%d %d %d \n", temp->data.y, temp->data.x, temp->data.direction);
         free(temp);
         temp = next;
     }
@@ -25,14 +26,15 @@ void    stack_swap(LinkedStack *pStack)
     deleteLinkedStack(new_stack);
 }
 
-void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition endPos, LinkedStack *pStack)
+void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition endPos, LinkedStack *pStack) // 인수 레지스터
 {
-    int         exit = FALSE;
-    int         marked_map[HEIGHT][WIDTH] = {0, };
-    StackNode   *temp;
-    MapPosition buf;
-    int         dir, x, y;
+    int         exit = FALSE; // s
+    int         marked_map[HEIGHT][WIDTH] = {0, }; // s
+    StackNode   *temp; // s
+    MapPosition buf; // t
+    int         dir, x, y; // t
 
+    pushLSMapPosition(pStack, startPos);
     pushLSMapPosition(pStack, startPos);
     marked_map[startPos.x][startPos.y] = TRUE;
     while(!exit)
