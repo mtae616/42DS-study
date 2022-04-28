@@ -110,7 +110,7 @@ int main()
     endpos.direction = 0;
 
     findPath(mazeArray, startpos, endpos, pStack);    
-    // printMaze(mazeArray);
+    printMaze(mazeArray);
     // free(pStack);
     // system("leaks a.out");
     return 0;
