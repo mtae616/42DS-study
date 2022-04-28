@@ -4,6 +4,7 @@
 - <a href="https://github.com/mtae616/42DS-study/tree/master/stack/checkBracketMatching">check bracket matching</a>
 - <a href="https://github.com/mtae616/42DS-study/tree/master/stack/calculate">calulate postfix notation</a>
 - <a href="https://github.com/mtae616/42DS-study/tree/master/stack/postfix">convert to postfix notation</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/stack/maze">maze</a>
 
 <br />
 

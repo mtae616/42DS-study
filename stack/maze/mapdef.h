@@ -21,5 +21,7 @@ enum PosStatus { NOT_VISIT = 0, WALL = 1 , VISIT = 2  };
 void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPost, MapPosition endPos, LinkedStack *pStack);
 int pushLSMapPosition(LinkedStack *pStack, MapPosition node);
 void printMaze(int mazeArray[HEIGHT][WIDTH]);
+void showPath(LinkedStack *pStack);
+MapPosition makeNode(int x, int y, int dir);
 
 #endif
