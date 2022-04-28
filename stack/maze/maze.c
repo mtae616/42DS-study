@@ -54,6 +54,8 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
     while(!exit)
     {
         temp = popLS(pStack);
+        if (!temp) // stack이 비워졌다면, 올바른 경로가 없다는 것이다.
+            return ;
         x = temp->data.x;
         y = temp->data.y;
         dir = temp->data.direction;
