@@ -28,6 +28,7 @@ void    stack_swap(LinkedStack *pStack) // 거꾸로 담겨있는 stack을 순�
         temp = popLS(pStack);
         next = temp->pLink;
         pushLSMapPosition(new_stack, temp->data);
+        printf("%d %d %d \n", temp->data.y, temp->data.x, temp->data.direction);
         free(temp);
         temp = next;
     }
@@ -53,6 +54,8 @@ void findPath(int mazeArray[HEIGHT][WIDTH], MapPosition startPos, MapPosition en
     while(!exit)
     {
         temp = popLS(pStack);
+        if (!temp) // stack이 비워졌다면, 올바른 경로가 없다는 것이다.
+            return ;
         x = temp->data.x;
         y = temp->data.y;
         dir = temp->data.direction;
