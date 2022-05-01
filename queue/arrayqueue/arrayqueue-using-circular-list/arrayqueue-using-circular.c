@@ -1,22 +1,23 @@
 #include "arrayqueue.h"
 
-ArrayQueue* createArrayQueue(int maxElementCount)
+ArrayQueue* createArrayQueue(int maxElementCount) // Queue 생성
 {
     ArrayQueue  *pQueue;
 
     if (maxElementCount < 0)
         return (NULL);
     pQueue = calloc(1, sizeof(ArrayQueue));
-    pQueue->pElement = calloc(maxElementCount, sizeof(char));
+    pQueue->pElement = calloc(maxElementCount, sizeof(char)); // max 만큼 char 배열 생성
     pQueue->maxElementCount = maxElementCount;
     return (pQueue);
 }
 
-int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element)
+int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element) // 삽입
 {
     if (isArrayQueueFull(pQueue))
         return FALSE;
     pQueue->pElement[(pQueue->rear) % pQueue->maxElementCount].data = element.data;
+    // maxcount로 나눈 나머지 값이 새로운 index가 되게 한다.
     pQueue->rear += 1;
     if (pQueue->rear >= pQueue->maxElementCount)
         pQueue->rear = (pQueue->rear) % pQueue->maxElementCount;
@@ -24,7 +25,7 @@ int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element)
     return TRUE;
 }
 
-ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
+ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue) // 반환
 {
     ArrayQueueNode *temp = calloc(1, sizeof(ArrayQueueNode));
     
@@ -36,6 +37,7 @@ ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
     pQueue->front += 1;
     if (pQueue->front >= pQueue->maxElementCount)
         pQueue->front = (pQueue->front) % pQueue->maxElementCount;
+        // maxcount로 나눈 나머지 값이 새로운 Index가 되게 한다.
     return (temp);
 }
 
