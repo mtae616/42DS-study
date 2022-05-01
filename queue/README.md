@@ -1,9 +1,9 @@
 # Queue
 
-- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/arrayqueue/arrayqueue-using-arraylist">Queue using Array list</a>
-- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/arrayqueue/arrayqueue-using-circular-list">Queue using circular list</a>
-- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/linkeddeque/queue-using-linked-list">Queue using Linked list</a>
-- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/linkeddeque/dequeue-using-linked-list">Deque using Linked list</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/arrayqueue">Queue using Array list</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/arrayqueue">Queue using circular list</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/linkeddeque">Queue using Linked list</a>
+- <a href="https://github.com/mtae616/42DS-study/tree/master/queue/linkeddeque">Deque using Linked list</a>
 
 <br />
 
