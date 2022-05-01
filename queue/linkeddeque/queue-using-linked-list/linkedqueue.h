@@ -8,7 +8,6 @@ typedef struct QueueNodeType
 {
 	char data;
 	struct QueueNodeType* pRLink;
-	// struct QueueNodeType* pLLink; 얘 필요 없음
 } QueueNode;
 
 typedef struct LinkedQueueType

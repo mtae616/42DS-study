@@ -1,6 +1,6 @@
 ## 큐, Queue
 
-[##_Image|kage@bFNfVq/btrAUyVFCVG/gTg7jJqtSzFqS7wGh5Zb81/img.png|CDM|1.3|{"originWidth":300,"originHeight":196,"style":"alignCenter","caption":"출처 :&amp;nbsp;https://en.wikipedia.org/wiki/Queue_(abstract_data_type)"}_##]
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbFNfVq%2FbtrAUyVFCVG%2FgTg7jJqtSzFqS7wGh5Zb81%2Fimg.png" />
 
 큐(queue)는 컴퓨터 과학 분야에서 쓰이는 컴퓨터의 기본적인 자료 구조의 한가지로,  
 먼저 집어 넣은 데이터가 먼저 나오는 FIFO(First In First Out)구조로 저장하는 형식을 말한다.  

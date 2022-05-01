@@ -1,6 +1,6 @@
 #include "linkeddeque.h"
 
-LinkedDeque* createLinkedDeque()
+LinkedDeque* createLinkedDeque() // 생성
 {
     LinkedDeque *temp;
 
@@ -8,75 +8,81 @@ LinkedDeque* createLinkedDeque()
     return (temp);
 }
 
-int insertFrontLD(LinkedDeque* pDeque, DequeNode element)
+int insertFrontLD(LinkedDeque* pDeque, DequeNode element) // front 삽입
 {
     DequeNode   *temp = calloc(1, sizeof(DequeNode));
 
     *temp = element;
-    if (isLinkedDequeEmpty(pDeque))
+    if (isLinkedDequeEmpty(pDeque)) // node가 없다면
     {
-        pDeque->pFrontNode = temp;
-        pDeque->pRearNode = temp;
+        pDeque->pFrontNode = temp; // front 는 자기 자신이다.
+        pDeque->pRearNode = temp; // rear도 자기 자신이다.
         pDeque->currentElementCount += 1;
         return (TRUE);
     }
-    pDeque->pFrontNode->pLLink = temp;
-    temp->pRLink = pDeque->pFrontNode;
-    pDeque->pFrontNode = temp;
+    pDeque->pFrontNode->pLLink = temp; // front의 왼편에 새로 들어온 node 설정
+    temp->pRLink = pDeque->pFrontNode; // front를 자기 다음으로 설정
+    pDeque->pFrontNode = temp; // front 갱신
     pDeque->currentElementCount += 1;
     return (TRUE);
 }
 
-int insertRearLD(LinkedDeque* pDeque, DequeNode element)
+int insertRearLD(LinkedDeque* pDeque, DequeNode element) // rear 삽입
 {
     DequeNode *temp = calloc(1, sizeof(DequeNode));
 
     *temp = element;
-    if (isLinkedDequeEmpty(pDeque))
+    if (isLinkedDequeEmpty(pDeque)) // node가 없다면
     {
-        pDeque->pFrontNode = temp;
-        pDeque->pRearNode = temp;
+        pDeque->pFrontNode = temp; // front는 자기 자신이다.
+        pDeque->pRearNode = temp; // Rear도 자기 자신이다.
         pDeque->currentElementCount += 1;
         return (TRUE);
     }
-    pDeque->pRearNode->pRLink = temp;
-    temp->pLLink = pDeque->pRearNode;
-    pDeque->pRearNode = temp;
+    pDeque->pRearNode->pRLink = temp; // rear의 오른편에 새로 들어온 node 설정
+    temp->pLLink = pDeque->pRearNode; // rear를 자기 전으로 설정
+    pDeque->pRearNode = temp; // rear 갱신
     pDeque->currentElementCount += 1;
     return (TRUE);
 }
 
-DequeNode* deleteFrontLD(LinkedDeque* pDeque)
+DequeNode* deleteFrontLD(LinkedDeque* pDeque) // Front 반환
 {
     DequeNode   *temp;
 
     temp = pDeque->pFrontNode;
-    if (pDeque->currentElementCount == 1)
+    if (!temp) // temp가 없는 경우
+        return NULL;
+    if (pDeque->currentElementCount == 1) // node가 1개만 있다면
     {
-        pDeque->pFrontNode = NULL;
+        pDeque->pFrontNode = NULL; 
+        pDeque->pRearNode = NULL; // front와 Rear를 자기자신으로 설정했기 때문에 모두 해제한다.
         pDeque->currentElementCount -= 1;
         return (temp);
     }
-    pDeque->pFrontNode = temp->pRLink;
-    pDeque->pFrontNode->pLLink = NULL;
+    pDeque->pFrontNode = temp->pRLink; // 앞에서 반환되기 때문에 새로운 front는 front 오른편으로 설정한다.
+    pDeque->pFrontNode->pLLink = NULL; // front의 왼편을 해제한다.
     temp->pRLink = NULL;
     pDeque->currentElementCount -= 1;
     return (temp);
 }
 
-DequeNode* deleteRearLD(LinkedDeque* pDeque)
+DequeNode* deleteRearLD(LinkedDeque* pDeque) // rear 반환
 {
     DequeNode   *temp;
 
     temp = pDeque->pRearNode;
-    if (pDeque->currentElementCount == 1)
+    if (!temp) // temp가 없는 경우
+        return NULL;
+    if (pDeque->currentElementCount == 1) // node가 1개만 있다면
     {
-        pDeque->pRearNode = NULL;
+        pDeque->pFrontNode = NULL;
+        pDeque->pRearNode = NULL; // front와 Rear를 자기자신으로 설정했기 때문에 모두 해제한다.
         pDeque->currentElementCount -= 1;
         return (temp);
     }
-    pDeque->pRearNode = temp->pLLink;
-    pDeque->pRearNode->pRLink = NULL;
+    pDeque->pRearNode = temp->pLLink; // 뒤에서 반환되기 때문에 새로운 Rear는 Rear의 왼편이다.
+    pDeque->pRearNode->pRLink = NULL; // Rear의 오른편을 해제한다.
     temp->pLLink = NULL;
     pDeque->currentElementCount -= 1;
     return (temp);
