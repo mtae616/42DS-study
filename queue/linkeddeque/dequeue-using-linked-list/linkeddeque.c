@@ -57,7 +57,7 @@ DequeNode* deleteFrontLD(LinkedDeque* pDeque)
         pDeque->currentElementCount -= 1;
         return (temp);
     }
-    pDeque->pFrontNode = pDeque->pFrontNode->pRLink;
+    pDeque->pFrontNode = temp->pRLink;
     pDeque->pFrontNode->pLLink = NULL;
     temp->pRLink = NULL;
     pDeque->currentElementCount -= 1;
@@ -75,7 +75,7 @@ DequeNode* deleteRearLD(LinkedDeque* pDeque)
         pDeque->currentElementCount -= 1;
         return (temp);
     }
-    pDeque->pRearNode = pDeque->pRearNode->pLLink;
+    pDeque->pRearNode = temp->pLLink;
     pDeque->pRearNode->pRLink = NULL;
     temp->pLLink = NULL;
     pDeque->currentElementCount -= 1;

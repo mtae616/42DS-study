@@ -12,15 +12,14 @@ int insertLQ(LinkedQueue* pQueue, QueueNode element)
 {
     QueueNode *temp = calloc(1, sizeof(QueueNode));
 
+    *temp = element;
     if (isLinkedQueueEmpty(pQueue))
     {
-        *temp = element;
         pQueue->pFrontNode = temp;
         pQueue->pRearNode = temp;
         pQueue->currentElementCount += 1;
         return (TRUE);
     }
-    *temp = element;
     pQueue->pRearNode->pRLink = temp;
     pQueue->pRearNode = temp;
     pQueue->currentElementCount += 1;
@@ -31,18 +30,16 @@ QueueNode* deleteLQ(LinkedQueue* pQueue)
 {
     QueueNode   *temp = calloc(1, sizeof(QueueNode));
 
+    temp = pQueue->pFrontNode;
     if (pQueue->currentElementCount == 1)
     {
-        temp = pQueue->pFrontNode;
         pQueue->pFrontNode = NULL;
         pQueue->pRearNode = NULL;
         pQueue->currentElementCount -= 1;
         return (temp);
     }
-    temp = pQueue->pFrontNode;
     pQueue->pFrontNode = pQueue->pFrontNode->pRLink;
     temp->pRLink = NULL;
-    temp->pLLink = NULL;
     pQueue->currentElementCount -= 1;
     return (temp);
 }

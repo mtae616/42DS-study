@@ -16,6 +16,8 @@ int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element) // 삽입
 {
     if (isArrayQueueFull(pQueue))
         return FALSE;
+    if (pQueue->rear > pQueue->maxElementCount)
+        return (FALSE);
     pQueue->pElement[pQueue->rear].data = element.data; // 무조건 끝에 들어간다.
     pQueue->rear += 1;
     pQueue->currentElementCount += 1;

@@ -18,7 +18,7 @@ int enqueueAQ(ArrayQueue* pQueue, ArrayQueueNode element)
         return FALSE;
     pQueue->pElement[(pQueue->rear) % pQueue->maxElementCount].data = element.data;
     pQueue->rear += 1;
-    if (pQueue->rear >= 4)
+    if (pQueue->rear >= pQueue->maxElementCount)
         pQueue->rear = (pQueue->rear) % pQueue->maxElementCount;
     pQueue->currentElementCount += 1;
     return TRUE;
@@ -34,7 +34,7 @@ ArrayQueueNode *dequeueAQ(ArrayQueue* pQueue)
     pQueue->pElement[pQueue->front].data = 0;
     pQueue->currentElementCount -= 1;
     pQueue->front += 1;
-    if (pQueue->front >= 4)
+    if (pQueue->front >= pQueue->maxElementCount)
         pQueue->front = (pQueue->front) % pQueue->maxElementCount;
     return (temp);
 }
