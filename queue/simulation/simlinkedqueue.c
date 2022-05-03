@@ -12,10 +12,16 @@ void insertCustomer(int arrivalTime, int processTime, LinkedQueue *pQueue)
 void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pWaitQueue)
 {
     QueueNode   *temp;
-    temp = deleteLQ(pArrivalQueue);
-    temp->customer.status = arrival;
-    temp->customer.startTime = currentTime;
-    insertLQ(pWaitQueue, *temp);
+
+    if (isLinkedQueueEmpty(pArrivalQueue))
+        return ;
+    temp = peekLQ(pArrivalQueue);
+    if (currentTime == temp->customer.arrivalTime)
+    {
+        temp = deleteLQ(pArrivalQueue);
+        temp->customer.status = arrival;
+        insertLQ(pWaitQueue, *temp);
+    }
 }
 
 QueueNode* processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
@@ -28,6 +34,7 @@ QueueNode* processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
     else if(temp->customer.status == arrival)
     {
         temp->customer.status = start;
+        temp->customer.startTime = currentTime;
         return (NULL);
     }
     else if(temp->customer.startTime + temp->customer.serviceTime == currentTime)
@@ -41,11 +48,10 @@ QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode, int *
     if (!pServiceNode)
         return (NULL);
     *pServiceUserCount += 1;
-    *pTotalWaitTime += pServiceNode->customer.startTime - pServiceNode->customer.arrivalTime;
+    if (pServiceNode->customer.startTime - pServiceNode->customer.arrivalTime > 0)
+        *pTotalWaitTime += pServiceNode->customer.startTime - pServiceNode->customer.arrivalTime;
     pServiceNode->customer.endTime = currentTime;
     pServiceNode->customer.status = end;
-    // if (pServiceNode->pRLink)
-    //     return (NULL);
     return (pServiceNode);
 }
 
@@ -76,14 +82,19 @@ int main()
     s1.arrivalTime = t;
     s1.serviceTime = 2;
 
-    insertCustomer(t, s1.serviceTime, ArrivalQueue);
-    processArrival(t, ArrivalQueue, WaitQueue);
+    insertCustomer(0, 3, ArrivalQueue);
 
-    insertCustomer(1, 2, ArrivalQueue);
-    processArrival(2, ArrivalQueue, WaitQueue);
-    
-    while(!exit)
+    insertCustomer(2, 2, ArrivalQueue);
+
+    insertCustomer(4, 1, ArrivalQueue);
+
+    insertCustomer(6, 1, ArrivalQueue);
+
+    insertCustomer(8, 3, ArrivalQueue);
+
+    while(t < 12)
     {
+        processArrival(t, ArrivalQueue, WaitQueue);
         temp = processServiceNodeStart(t, WaitQueue);
         if (temp)
         {
@@ -92,9 +103,10 @@ int main()
             if (isLinkedQueueEmpty(WaitQueue))
                 exit = 1;
         }
-        t++;
+        else
+            t++;
     }
     printReport(WaitQueue, serviceUserCount, totalWaitTime);
-    
+
     return 0;
 }
