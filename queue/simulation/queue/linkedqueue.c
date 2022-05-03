@@ -28,7 +28,7 @@ int insertLQ(LinkedQueue* pQueue, QueueNode element)
 
 QueueNode* deleteLQ(LinkedQueue* pQueue)
 {
-    QueueNode   *temp = calloc(1, sizeof(QueueNode));
+    QueueNode   *temp;
 
     temp = pQueue->pFrontNode;
     if (!temp) // node가 없었을 때
@@ -43,6 +43,7 @@ QueueNode* deleteLQ(LinkedQueue* pQueue)
     pQueue->pFrontNode = pQueue->pFrontNode->pRLink; // front node 갱신
     temp->pRLink = NULL;
     pQueue->currentElementCount -= 1;
+    
     return (temp);
 }
 
@@ -71,33 +72,3 @@ int isLinkedQueueEmpty(LinkedQueue* pQueue)
 {
     return (pQueue->currentElementCount == 0);
 }
-
-// int main()
-// {
-//     LinkedQueue *buf = createLinkedQueue();
-//     QueueNode   *curr;
-//     QueueNode   temp;
-
-//     temp.data = 'a';
-//     insertLQ(buf, temp);
-//     temp.data = 'b';
-//     insertLQ(buf, temp);
-//     temp.data = 'c';
-//     insertLQ(buf, temp);
-//     temp.data = 'd';
-//     insertLQ(buf, temp);
-//     deleteLQ(buf);
-//     deleteLQ(buf);
-//     deleteLQ(buf);
-//     deleteLQ(buf);
-//     temp.data = 'e';
-//     insertLQ(buf, temp);
-
-//     curr = buf->pFrontNode;
-//     for(int i = 0; i < buf->currentElementCount; i++)
-//     {
-//         printf("%c", curr->data);
-//         curr = curr->pRLink;
-//     }
-//     return 0;
-// }
