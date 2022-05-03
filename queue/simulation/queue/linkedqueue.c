@@ -72,32 +72,32 @@ int isLinkedQueueEmpty(LinkedQueue* pQueue)
     return (pQueue->currentElementCount == 0);
 }
 
-int main()
-{
-    LinkedQueue *buf = createLinkedQueue();
-    QueueNode   *curr;
-    QueueNode   temp;
+// int main()
+// {
+//     LinkedQueue *buf = createLinkedQueue();
+//     QueueNode   *curr;
+//     QueueNode   temp;
 
-    temp.data = 'a';
-    insertLQ(buf, temp);
-    temp.data = 'b';
-    insertLQ(buf, temp);
-    temp.data = 'c';
-    insertLQ(buf, temp);
-    temp.data = 'd';
-    insertLQ(buf, temp);
-    deleteLQ(buf);
-    deleteLQ(buf);
-    deleteLQ(buf);
-    deleteLQ(buf);
-    temp.data = 'e';
-    insertLQ(buf, temp);
+//     temp.data = 'a';
+//     insertLQ(buf, temp);
+//     temp.data = 'b';
+//     insertLQ(buf, temp);
+//     temp.data = 'c';
+//     insertLQ(buf, temp);
+//     temp.data = 'd';
+//     insertLQ(buf, temp);
+//     deleteLQ(buf);
+//     deleteLQ(buf);
+//     deleteLQ(buf);
+//     deleteLQ(buf);
+//     temp.data = 'e';
+//     insertLQ(buf, temp);
 
-    curr = buf->pFrontNode;
-    for(int i = 0; i < buf->currentElementCount; i++)
-    {
-        printf("%c", curr->data);
-        curr = curr->pRLink;
-    }
-    return 0;
-}
+//     curr = buf->pFrontNode;
+//     for(int i = 0; i < buf->currentElementCount; i++)
+//     {
+//         printf("%c", curr->data);
+//         curr = curr->pRLink;
+//     }
+//     return 0;
+// }

@@ -1,63 +1,23 @@
 #include "simdef.h"
 
-int t = 0;
-int serviceUserCount = 0;
-int totalWaitTime = 0;
-int exit = 0;
-
 void insertCustomer(int arrivalTime, int processTime, LinkedQueue *pQueue)
 {
-    QueueNode buf;
-    LinkedQueue *WaitQueue = createLinkedQueue();
-    QueueNode   *ServiceNode;
-    
-    // while(!exit)
-    // {
-    //     pServiceNode = processServiceNodeEnd(arrivalTime, pServiceNode, serviceUserCount, totalWaitTime);
-        // pServiceNode = processServiceNodeStart(arrivalTime, pQueue);
-        // while(pServiceNode == NULL)
-        // {
-        //     if (!pServiceNode)
-        //     {
-        //         buf.customer.arrivalTime = arrivalTime;
-        //         buf.customer.serviceTime = processTime;
-        //         insertLQ(pQueue, buf);
-        //         processArrival(arrivalTime, pQueue, pWaitQueue);
-        //         processServiceNodeEnd(arrivalTime, pServiceNode, serviceUserCount, totalWaitTime);
-        //     }
-        //     arrivalTime += 1;
-        // }
-    //     processArrival(arrivalTime, pQueue, pWaitQueue);
-    // }
+    QueueNode   buf;
 
-    processArrival(arrivalTime, pQueue, WaitQueue);
-    ServiceNode = peekLQ(WaitQueue);
-    while(t != ServiceNode->customer.endTime)
-    {
-        if (ServiceNode->customer.endTime == t)
-        {
-            processServiceNodeEnd(t, ServiceNode, serviceUserCount, totalWaitTime);
-        }
-        else
-        {
-            processServiceNodeStart(t, WaitQueue);
-        }
-        t++;
-    }
-    
+    buf.customer.arrivalTime = arrivalTime;
+    buf.customer.serviceTime = processTime;
+    insertLQ(pQueue, buf);
 }
-// 1
+
 void processArrival(int currentTime, LinkedQueue *pArrivalQueue, LinkedQueue *pWaitQueue)
 {
     QueueNode   *temp;
     temp = deleteLQ(pArrivalQueue);
     temp->customer.status = arrival;
     temp->customer.startTime = currentTime;
-    temp->customer.endTime = currentTime + temp->customer.serviceTime;
     insertLQ(pWaitQueue, *temp);
-    // processServiceNodeStart(currentTime, deleteLQ(pWaitQueue));
 }
-// 3
+
 QueueNode* processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
 {
     QueueNode   *temp;
@@ -65,48 +25,76 @@ QueueNode* processServiceNodeStart(int currentTime, LinkedQueue *pWaitQueue)
     temp = peekLQ(pWaitQueue);
     if(!temp)
         return (NULL);
-    else if(temp->customer.status == start)
+    else if(temp->customer.status == arrival)
+    {
+        temp->customer.status = start;
         return (NULL);
-    else if(temp->customer.endTime == currentTime + temp->customer.serviceTime)
+    }
+    else if(temp->customer.startTime + temp->customer.serviceTime == currentTime)
         return temp;
-    else if(temp->customer.status == end)
+    else
         return (NULL);
 }
-// 2
+
 QueueNode* processServiceNodeEnd(int currentTime, QueueNode *pServiceNode, int *pServiceUserCount, int *pTotalWaitTime)
 {
     if (!pServiceNode)
         return (NULL);
     *pServiceUserCount += 1;
-    *pTotalWaitTime += pServiceNode->customer.serviceTime;
-    
-    pServiceNode->customer.startTime = currentTime;
+    *pTotalWaitTime += pServiceNode->customer.startTime - pServiceNode->customer.arrivalTime;
+    pServiceNode->customer.endTime = currentTime;
     pServiceNode->customer.status = end;
-    return pServiceNode;
+    // if (pServiceNode->pRLink)
+    //     return (NULL);
+    return (pServiceNode);
 }
 
 void printSimCustomer(int currentTime, SimCustomer customer)
 {
     printf("the customers arrival, service time : %d %d", customer.arrivalTime, customer.serviceTime);
-    // insertCutomer(customer.arrivalTime, customer.serviceTime, );
 }
-// 4
+
 void printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue);
-// 5
-void printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime);
+
+void printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime)
+{
+    printf("user count : %d, wait Time : %d\n", serviceUserCount, totalWaitTime);
+}
 
 int main()
 {
-    LinkedQueue *pArrivalQueue = createLinkedQueue();
+    LinkedQueue *ArrivalQueue = createLinkedQueue();
+    LinkedQueue *WaitQueue = createLinkedQueue();
+    QueueNode   *temp;
+    QueueNode   *exitNode;
     SimCustomer s1;
+    int t = 0;
+    int serviceUserCount = 0;
+    int totalWaitTime = 0;
+    int exit = 0;
+
     s1.arrivalTime = t;
     s1.serviceTime = 2;
 
-    // processArrival(time, pArrivalQueue, pWaitQueue);
+    insertCustomer(t, s1.serviceTime, ArrivalQueue);
+    processArrival(t, ArrivalQueue, WaitQueue);
 
-    // printSimCustomer(time, s1);
-    insertCustomer(t, s1.serviceTime, pArrivalQueue);
-
-
+    insertCustomer(1, 2, ArrivalQueue);
+    processArrival(2, ArrivalQueue, WaitQueue);
+    
+    while(!exit)
+    {
+        temp = processServiceNodeStart(t, WaitQueue);
+        if (temp)
+        {
+            exitNode = processServiceNodeEnd(t, temp, &serviceUserCount, &totalWaitTime);
+            deleteLQ(WaitQueue);
+            if (isLinkedQueueEmpty(WaitQueue))
+                exit = 1;
+        }
+        t++;
+    }
+    printReport(WaitQueue, serviceUserCount, totalWaitTime);
+    
     return 0;
 }
