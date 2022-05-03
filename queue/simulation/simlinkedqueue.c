@@ -79,7 +79,7 @@ void printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
 
 void printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime)
 {
-    printf("user count : %d, wait Time : %d\n", serviceUserCount, totalWaitTime);
+    printf("reamining : %d, user count : %d, wait Time : %d\n", pWaitQueue->currentElementCount, serviceUserCount, totalWaitTime);
 }
 
 int main()
@@ -96,7 +96,7 @@ int main()
     insertCustomer(4, 1, ArrivalQueue);
     insertCustomer(6, 1, ArrivalQueue);
     insertCustomer(8, 3, ArrivalQueue);
-    while(t < 12)
+    while(t < 10)
     {
         processArrival(t, ArrivalQueue, WaitQueue);
         printWaitQueueStatus(t, WaitQueue);
