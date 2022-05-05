@@ -79,7 +79,7 @@ void printWaitQueueStatus(int currentTime, LinkedQueue *pWaitQueue)
 
 void printReport(LinkedQueue *pWaitQueue, int serviceUserCount, int totalWaitTime)
 {
-    printf("reamining : %d, user count : %d, wait Time : %d\n", pWaitQueue->currentElementCount, serviceUserCount, totalWaitTime);
+    printf("remaining : %d, user count : %d, wait Time : %d\n", pWaitQueue->currentElementCount, serviceUserCount, totalWaitTime);
 }
 
 int main()
