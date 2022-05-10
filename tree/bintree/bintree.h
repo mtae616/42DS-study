@@ -28,7 +28,7 @@ void deleteBinTree(BinTree* pBinTree);
 void deleteBinTreeNode(BinTreeNode* pNode);
 
 void preorderTraversalBinTree(BinTreeNode* pNode);
-
+void levelOrderTraversalBintree(BinTreeNode* pNode);
 
 #endif
 

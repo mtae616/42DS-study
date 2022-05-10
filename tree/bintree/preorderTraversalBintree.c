@@ -6,14 +6,14 @@ void preorderTraversalBinTree(BinTreeNode* pNode)
         return ;
     if (pNode->pLeftChild)
     {
-        printf("%c\n", pNode->data);
+        printf("%c ", pNode->data);
         preorderTraversalBinTree(pNode->pLeftChild);
         if (pNode->pRightChild)
             preorderTraversalBinTree(pNode->pRightChild);
     }
     else
     {
-        printf("%c\n", pNode->data);
+        printf("%c ", pNode->data);
         preorderTraversalBinTree(pNode->pRightChild);
     }
 }
