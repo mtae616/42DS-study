@@ -1,55 +1,19 @@
 #include "bintree.h"
 
-void preorderTraversalBinTree(BinTreeNode* pRootNode)
+void preorderTraversalBinTree(BinTreeNode* pNode)
 {
-
-}
-
-int main()
-{
-    BinTree *temp;
-    BinTreeNode buf;
-    BinTreeNode *root;
-    BinTreeNode *b;
-    BinTreeNode *c;
-    BinTreeNode *d;
-    BinTreeNode *e;
-    BinTreeNode *f;
-    BinTreeNode *g;
-
-    buf.data = 'A';
-
-    temp = makeBinTree(buf);
-    buf.data = 'B';
-    b = insertLeftChildNodeBT(temp->pRootNode, buf);
-    
-    buf.data = 'D';
-    d = insertLeftChildNodeBT(b, buf);
-    buf.data = 'H';
-    insertLeftChildNodeBT(d, buf);
-    buf.data = 'I';
-    insertRightChildNodeBT(d, buf);
-
-    buf.data = 'E';
-    e = insertRightChildNodeBT(b, buf);
-    buf.data = 'J';
-    insertLeftChildNodeBT(e, buf);
-    
-    buf.data = 'C';
-    c = insertRightChildNodeBT(temp->pRootNode, buf);
-    
-    buf.data = 'F';
-    f = insertLeftChildNodeBT(c, buf);
-    buf.data = 'K';
-    insertRightChildNodeBT(f, buf);
-
-    buf.data = 'G';
-    g = insertRightChildNodeBT(c, buf);
-
-    buf.data = 'L';
-    insertLeftChildNodeBT(g, buf);
-    buf.data = 'M';
-    insertRightChildNodeBT(g, buf);
-
-    return 0;
+    if (!pNode)
+        return ;
+    if (pNode->pLeftChild)
+    {
+        printf("%c\n", pNode->data);
+        preorderTraversalBinTree(pNode->pLeftChild);
+        if (pNode->pRightChild)
+            preorderTraversalBinTree(pNode->pRightChild);
+    }
+    else
+    {
+        printf("%c\n", pNode->data);
+        preorderTraversalBinTree(pNode->pRightChild);
+    }
 }
