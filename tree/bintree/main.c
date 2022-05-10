@@ -47,7 +47,8 @@ int main()
     insertRightChildNodeBT(g, buf);
 
     // preorderTraversalBinTree(temp->pRootNode);
-    levelOrderTraversalBintree(temp->pRootNode);
+    // levelOrderTraversalBintree(temp->pRootNode);
+    inorderTraversalBintree(temp->pRootNode);
 
     return 0;
 }
