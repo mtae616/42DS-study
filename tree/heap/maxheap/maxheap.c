@@ -13,6 +13,8 @@ int insertMaxHeapNode(Heap* hList, HeapNode element)
 {
 	int	i;
 
+	if (isMaxHeapFull(hList))
+		return (FALSE);
 	i = hList->currentElementCount;
 	while ((i != 0) && element.key > hList->pElement[i / 2].key)
 	{
@@ -32,12 +34,12 @@ HeapNode	popMaxHeapNode(Heap* hList)
 	root = hList->pElement[0];
 	i = hList->currentElementCount;
 	temp = hList->pElement[i - 1];
+	hList->currentElementCount -= 1;
 	parent = 0;
 	child = 1;
 	while(child <= hList->currentElementCount)
 	{
-		if((child < hList->currentElementCount) && hList->pElement[child].key < hList->pElement[child + 1].key)
-			child += 1;
+		if((child < hList->currentElementCount) && hList->pElement[child].key < hList->pElement[child + 1].key) child += 1;
 		if (temp.key >= hList->pElement[child].key) break;
 		hList->pElement[parent] = hList->pElement[child];
 		parent = child;
