@@ -72,20 +72,27 @@ BinSearchTreeNode   *insertBST(BinSearchTree *pBinSearchTree, BinSearchTreeNode 
 BinSearchTreeNode *LorR(BinSearchTreeNode *temp, int searchKey)
 {
     BinSearchTreeNode   *buf;
+
+    buf = NULL;
     if (searchKey == temp->pRightChild->key)
     {
         buf = temp->pRightChild;
         temp->pRightChild = NULL;
-        return (buf);
+        if (buf->pLeftChild && !(buf->pRightChild)) // 자식 노드 1개
+            temp->pRightChild = buf->pLeftChild;
+        else if (!(buf->pLeftChild) && buf->pRightChild) // 자식 노드 1개
+            temp->pRightChild = buf->pRightChild;
     }
     else if (searchKey == temp->pLeftChild->key)
     {
         buf = temp->pLeftChild;
         temp->pLeftChild = NULL;
-        return (buf);
+        if (buf->pLeftChild && !(buf->pRightChild)) // 자식 노드 1개
+            temp->pLeftChild = buf->pLeftChild;
+        else if (!(buf->pLeftChild) && buf->pRightChild) // 자식 노드 1개
+            temp->pLeftChild = buf->pRightChild;
     }
-    else
-        return (NULL);
+    return (buf);
 }
 
 void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey)
@@ -101,10 +108,6 @@ void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey)
         if ((temp->pRightChild && temp->pRightChild->key == searchKey) || (temp->pLeftChild && temp->pLeftChild->key == searchKey))
         {
             delNode = LorR(temp, searchKey);
-            if (delNode->pLeftChild && !(delNode->pRightChild)) // 자식 노드 1개
-                temp->pRightChild = delNode->pLeftChild;
-            if (!(delNode->pLeftChild) && delNode->pRightChild) // 자식 노드 1개
-                temp->pRightChild = delNode->pRightChild;
             break ;
         }
         if (temp->pLeftChild && temp->key > searchKey)
@@ -203,9 +206,9 @@ int main()
     buf.key = 46;
     insertBST(temp, buf);
     
-    deleteBST(temp, 30);
+    // deleteBST(temp, 30);
     deleteBST(temp, 55);
-    deleteBST(temp, 46);
+    // deleteBST(temp, 46);
 
     preorderTraversalBinTree(temp->pRootNode);
 
