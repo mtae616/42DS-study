@@ -134,10 +134,10 @@ void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey)
             pPredecessor->pRightChild = pSuccessor->pLeftChild;
         else
             pPredecessor->pRightChild = NULL;
-        if (temp->key < pSuccessor->key)
-            temp->pRightChild = pSuccessor;
-        else if (pBinSearchTree->pRootNode->key == searchKey)
+        if (pBinSearchTree->pRootNode->key == searchKey)
             pBinSearchTree->pRootNode = pSuccessor;
+        else if (temp->key < pSuccessor->key)
+            temp->pRightChild = pSuccessor;
         else if (temp->key > pSuccessor->key)
             temp->pLeftChild = pSuccessor;
         pSuccessor->pLeftChild = delNode->pLeftChild;
@@ -211,7 +211,7 @@ int main()
     
     deleteBST(temp, 30);
     deleteBST(temp, 55);
-    deleteBST(temp, 20);
+    // deleteBST(temp, 20);
 
     preorderTraversalBinTree(temp->pRootNode);
 
