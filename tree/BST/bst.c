@@ -116,12 +116,6 @@ void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey)
     }
     if (!delNode)
         return ;
-    else if (!(delNode->pLeftChild) && !(delNode->pRightChild)) // 자식노드 0
-    {
-        free(delNode);
-        delNode = NULL;
-        return ;
-    }
     else if (delNode->pLeftChild && delNode->pRightChild) // 자식노드 2
     {
         pSuccessor = delNode->pLeftChild;
@@ -142,9 +136,9 @@ void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey)
             temp->pLeftChild = pSuccessor;
         pSuccessor->pLeftChild = delNode->pLeftChild;
         pSuccessor->pRightChild = delNode->pRightChild;
-        free(delNode);
-        delNode = NULL;
     }
+    free(delNode); // 자식노드 0, 1
+    delNode = NULL;
 }
 
 BinSearchTreeNode   *getNodeBST(BinSearchTree *pBinSearchTree, int searchKey)
@@ -211,7 +205,7 @@ int main()
     
     deleteBST(temp, 30);
     deleteBST(temp, 55);
-    // deleteBST(temp, 20);
+    deleteBST(temp, 46);
 
     preorderTraversalBinTree(temp->pRootNode);
 
