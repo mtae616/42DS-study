@@ -1,4 +1,38 @@
-#include "maxheap.h"
+# 힙 Heap
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHCwMb%2FbtrCwadYRzq%2FEQi526KSGI8sKxUK7RLBN1%2Fimg.png">
+
+힙은 항상 완전 이진 트리 (위로부터 왼쪽 오른쪽 순서대로 쌓이는 것을 말한다.)의 형태를 지닌다.
+
+부모의 값은 자식의 값보다 크거나(Max heap), 작아야(Min heap) 한다.
+
+따라서 루트노드에는 항상 데이터 중 크거나 작은 값이 저장되어 있기 때문에 최대, 최소값 탐색에 O(1)이 걸린다.
+
+데이터의 삽입과 삭제는 모두 O(log N)이 소요된다.
+
+이러한 특성은 완전 이진 트리이며, 부모노드가 항상 크거나 작다는 확증에 기인한다.
+
+## Max heap 구현
+
+- 생성
+- 삽입
+- root node 반환, Pop
+- Heap 삭제
+
+### 생성
+
+```C
+typedef struct HeapNodeType
+{
+	int key;
+} HeapNode;
+
+typedef struct HeapType
+{
+	int maxElementCount;		// 최대 원소 개수
+	int currentElementCount;	// 현재 원소의 개수
+	HeapNode *pElement;	// 원소 저장을 위한 1차원 배열
+} Heap;
 
 Heap*	createHeap(int maxElementCount)
 {
@@ -8,7 +42,13 @@ Heap*	createHeap(int maxElementCount)
 	temp->pElement = calloc(maxElementCount, sizeof(HeapNode));
 	return temp;
 }
+```
 
+배열리스트로 구현하는 만큼, pElement에는 Node가 들어갈 만큼 할당하여야 한다.
+
+### 삽입
+
+```C
 int insertMaxHeapNode(Heap* hList, HeapNode element) // 삽입
 {
 	int	i;
@@ -25,7 +65,15 @@ int insertMaxHeapNode(Heap* hList, HeapNode element) // 삽입
 	hList->currentElementCount += 1;
 	return TRUE;
 }
+```
 
+Max heap 이므로, 삽입을 위해서는 부모노드가 새로 삽입할 노드보다 크다는 것을 확정하여야 한다.
+하여 만약 부모노드가 작다면, while문 내부에서 자식노드로 내려주는 연산을 통해 부모노드를 바꿀 수 있게 한다.
+삽입된 만큼 아래로 내려준다는 이미지이다.
+
+### Root node 반환, Pop
+
+```C
 HeapNode	popMaxHeapNode(Heap* hList) // root node 반환
 {
 	HeapNode	root, temp;
@@ -48,7 +96,14 @@ HeapNode	popMaxHeapNode(Heap* hList) // root node 반환
 	hList->pElement[parent] = temp; // 남은 자리에 temp를 할당한다.
 	return root;
 }
+```
 
+Root가 빠졌으므로 빠진 부분을 채워야한다.
+빠진 만큼 위로 올린다는 이미지이다.
+
+### Heap 삭제
+
+```C
 void deleteMaxHeap(Heap* hList)
 {
 	free(hList->pElement);
@@ -57,47 +112,6 @@ void deleteMaxHeap(Heap* hList)
 	hList = NULL;
 }
 
-int isMaxHeapFull(Heap* hList)
-{
-	return (hList->currentElementCount == hList->maxElementCount);
-}
+```
 
-int	getMaxHeapLength(Heap* hList)
-{
-	return (hList->currentElementCount);
-}
-
-int main()
-{
-	Heap	*temp = createHeap(10);
-	HeapNode	buf;
-
-	buf.key = 8;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 10;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 4;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 2;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 12;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 6;
-	insertMaxHeapNode(temp, buf);
-	buf.key = 20;
-	insertMaxHeapNode(temp, buf);
-	// buf.key = 100;
-	// insertMaxHeapNode(temp, buf);
-	// buf.key = 100;
-	// insertMaxHeapNode(temp, buf);
-	// buf.key = 100;
-	// insertMaxHeapNode(temp, buf);
-
-	for(int i = temp->currentElementCount; i > 0; i--)
-		printf("%d ", temp->pElement[i - 1].key);
-	buf = popMaxHeapNode(temp);
-	printf("\n%d\n", buf.key);
-	for(int i = temp->currentElementCount; i > 0; i--)
-		printf("%d ", temp->pElement[i - 1].key);
-	return 0;
-}
+할당을 해제한다.
