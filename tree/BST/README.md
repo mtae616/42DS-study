@@ -1,4 +1,41 @@
-#include "bst.h"
+## 이진 탐색 트리, Binary search tree
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FclAHlW%2FbtrCw8fLW5Y%2FihFRTC0TGsIWYserIuPNek%2Fimg.png" />
+
+이진 탐색 트리는
+
+- 각 노드에는 값이 있다.
+- 값들은 전순서(임의의 원소를 비교할 수 있는 부분 순서 집합)가 있다.
+- 노드의 왼쪽 서브트리에는 그 노드의 값보다 작은 값들을 지신 노드들로 이뤄진다.
+- 노드의 오른쪽 서브트리에는 그 노드의 값보다 큰 값들을 지닌 노드들로 이워진다.
+
+이진 탐색 트리는 일반적으로 탐색에서 O(log n)으로 장점을 갖는다.
+다만, 편향 트리로 이뤄져있다면 O(n)의 가능성이 있다.
+이 경우 red black tree를 이용할 수 있다.
+아래에서는 Linked list를 사용한 이진 탐색 트리의 구현을 살펴본다.
+
+## 구현
+
+- 생성
+- 삽입
+- 개별 node 삭제
+- Tree 삭제
+
+### 생성
+
+```C
+typedef struct BinSearchTreeNodeType
+{
+	int key;
+
+	struct BinSearchTreeNodeType* pLeftChild;
+	struct BinSearchTreeNodeType* pRightChild;
+} BinSearchTreeNode;
+
+typedef struct BinTreeType
+{
+	struct BinSearchTreeNodeType* pRootNode;
+} BinSearchTree;
 
 BinSearchTree   *makeBinSearchTree(BinSearchTreeNode rootNode) // 생성
 {
@@ -10,33 +47,18 @@ BinSearchTree   *makeBinSearchTree(BinSearchTreeNode rootNode) // 생성
     return (temp);
 }
 
-BinSearchTreeNode   *getRootNodeBST(BinSearchTree *pBinSearchTree)
-{
-    return (pBinSearchTree->pRootNode);
-}
+```
 
-void    deleteBinSearchTree(BinSearchTree *pBinSearchTree) // 트리 삭제
-{
-    deleteBinSearchTreeNode(pBinSearchTree->pRootNode);
-    free(pBinSearchTree);
-    pBinSearchTree = NULL;
-}
+key와 data를 가질 수 있지만,
+이번에는 key만을 가진 이진 탐색 트리를 구현했다.
 
-void    deleteBinSearchTreeNode(BinSearchTreeNode *pNode) // 노드 삭제
-{
-    if (pNode)
-    {
-        deleteBinSearchTreeNode(pNode->pLeftChild);
-        deleteBinSearchTreeNode(pNode->pRightChild);
-        free(pNode);
-        pNode = NULL;
-    }
-}
+### 삽입
 
+```C
 BinSearchTreeNode   *insertBST(BinSearchTree *pBinSearchTree, BinSearchTreeNode element) // node 삽입
 {
     BinSearchTreeNode   *buf;
-    BinSearchTreeNode   *new_one = calloc(1, sizeof(BinSearchTreeNode)); 
+    BinSearchTreeNode   *new_one = calloc(1, sizeof(BinSearchTreeNode));
 
     *new_one = element; // 새로 할당할 node
     new_one->pRightChild = 0;
@@ -68,7 +90,14 @@ BinSearchTreeNode   *insertBST(BinSearchTree *pBinSearchTree, BinSearchTreeNode 
             return (NULL);
     }
 }
+```
 
+root node 는 tree를 생성하며 할당해주어, 이외의 케이스에 대해서만 고려하면 된다.
+왼쪽 서브 트리는 항상 부모 노드보다 작다는 것, 오른쪽의 경우에는 항상 크다는 것을 유의하여야 한다.
+
+### 개별 node 삭제
+
+```C
 BinSearchTreeNode *LorR(BinSearchTreeNode *temp, int searchKey) // 왼쪽, 오른쪽 자식 노드인지 판별
 {
     BinSearchTreeNode   *buf;
@@ -80,7 +109,7 @@ BinSearchTreeNode *LorR(BinSearchTreeNode *temp, int searchKey) // 왼쪽, 오�
         temp->pRightChild = NULL;
         if (buf->pLeftChild && !(buf->pRightChild)) // 자식 노드 1개때 부모 노드와의 연결을 끊는다.
             temp->pRightChild = buf->pLeftChild;
-        else if (!(buf->pLeftChild) && buf->pRightChild) 
+        else if (!(buf->pLeftChild) && buf->pRightChild)
             temp->pRightChild = buf->pRightChild;
     }
     else if (searchKey == temp->pLeftChild->key) // 만약 왼쪽 자식 노드라면
@@ -89,7 +118,7 @@ BinSearchTreeNode *LorR(BinSearchTreeNode *temp, int searchKey) // 왼쪽, 오�
         temp->pLeftChild = NULL;
         if (buf->pLeftChild && !(buf->pRightChild)) // 자식 노드 1개때 부모 노드와의 연결을 끊는다.
             temp->pLeftChild = buf->pLeftChild;
-        else if (!(buf->pLeftChild) && buf->pRightChild) 
+        else if (!(buf->pLeftChild) && buf->pRightChild)
             temp->pLeftChild = buf->pRightChild;
     }
     return (buf);
@@ -97,7 +126,8 @@ BinSearchTreeNode *LorR(BinSearchTreeNode *temp, int searchKey) // 왼쪽, 오�
 
 void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey) // 개별 노드 삭제
 {
-    BinSearchTreeNode   *temp, *delNode, *pSuccessor, *pPredecessor; // 각각 삭제할 노드의 부모노드, 삭제할 노드, 계승할 노드, 계승할 노드의 부모노드 이다.
+    BinSearchTreeNode   *temp, *delNode, *pSuccessor, *pPredecessor;
+    // 각각 삭제할 노드의 부모노드, 삭제할 노드, 계승할 노드, 계승할 노드의 부모노드 이다.
 
     temp = pBinSearchTree->pRootNode; // 삭제할 노드의 부모노드로, Root로 시작한다.
     delNode = NULL;
@@ -143,99 +173,38 @@ void    deleteBST(BinSearchTree *pBinSearchTree, int searchKey) // 개별 노드
     free(delNode); // 할당 해제, 자식노드가 0개일 때는 고려할 것 없이 바로 할당해제 한다.
     delNode = NULL;
 }
+```
 
-BinSearchTreeNode   *getNodeBST(BinSearchTree *pBinSearchTree, int searchKey)
+어떠한 노드가 삭제되었을 때 고려해야 할 것은
+
+1. 원래 부모노드와 삭제한 노드의 서브트리를 이어줄 것
+2. 삭제한 노드에 자식 노드가 0개일 때
+   - 부모노드에 바로 이어주면 된다.
+3. 삭제한 노드에 자식 노드가 1개일 때
+   - 왼쪽인지 오른쪽인지 판별하여 이어준다.
+4. 삭제한 노드에 자식 노드가 2개일 때 - 삭제한 노드가 root인지 - 삭제한 노드의 자식 노드에 자식 노드가 있는지 - 삭제한 노드의 부모노드의 왼쪽 자식이 될지 오른쪽이 될지 - 삭제한 노드의 서브트리를 이어준다.
+   이다.
+
+### Tree 삭제
+
+```C
+void    deleteBinSearchTree(BinSearchTree *pBinSearchTree) // 트리 삭제
 {
-    BinSearchTreeNode   *temp;
-
-    temp = pBinSearchTree->pRootNode;
-    while (1)
-    {
-        if (!temp)
-            return (NULL);
-        if (temp->key == searchKey)
-            return (temp);
-        if (temp->key > searchKey)
-            temp = temp->pLeftChild;
-        else if (temp->key < searchKey)
-            temp = temp->pRightChild;
-    }
+    deleteBinSearchTreeNode(pBinSearchTree->pRootNode);
+    free(pBinSearchTree);
+    pBinSearchTree = NULL;
 }
 
-void preorderTraversalBinTree(BinSearchTreeNode* pNode)
+void    deleteBinSearchTreeNode(BinSearchTreeNode *pNode) // 노드 삭제
 {
-    if (!pNode)
-        return ;
-    if (pNode->pLeftChild)
+    if (pNode)
     {
-        printf("%d ", pNode->key);
-        preorderTraversalBinTree(pNode->pLeftChild);
-        if (pNode->pRightChild)
-            preorderTraversalBinTree(pNode->pRightChild);
-    }
-    else
-    {
-        printf("%d ", pNode->key);
-        preorderTraversalBinTree(pNode->pRightChild);
+        deleteBinSearchTreeNode(pNode->pLeftChild);
+        deleteBinSearchTreeNode(pNode->pRightChild);
+        free(pNode);
+        pNode = NULL;
     }
 }
+```
 
-int main()
-{
-    BinSearchTreeNode   buf;
-    BinSearchTreeNode   *root;
-    
-    buf.key = 30;
-    BinSearchTree   *temp = makeBinSearchTree(buf);
-    buf.key = 20;
-    insertBST(temp, buf);
-    buf.key = 40;
-    insertBST(temp, buf);
-    buf.key = 10;
-    insertBST(temp, buf);
-    buf.key = 24;
-    insertBST(temp, buf);
-    buf.key = 6;
-    insertBST(temp, buf);
-    buf.key = 14;
-    insertBST(temp, buf);
-    buf.key = 22;
-    insertBST(temp, buf);
-    buf.key = 34;
-    insertBST(temp, buf);
-    buf.key = 46;
-    insertBST(temp, buf);
-    
-    // deleteBST(temp, 30);
-    deleteBST(temp, 55);
-    // deleteBST(temp, 46);
-
-    preorderTraversalBinTree(temp->pRootNode);
-
-    // BinSearchTreeNode   *test;
-    // root = temp->pRootNode;
-    // printf("%d ", root->key);
-    // test = root->pLeftChild;
-    // printf("%d ", test->key);
-    // test = root->pRightChild;
-    // printf("%d ", test->key);
-    
-    // test = root->pLeftChild->pLeftChild;
-    // printf("%d ", test->key);
-    // test = root->pLeftChild->pRightChild;
-    // printf("%d ", test->key);
-
-    // test = root->pRightChild->pLeftChild;
-    // printf("%d ", test->key);
-    // test = root->pRightChild->pRightChild;
-    // printf("%d ", test->key);
-
-    // test = root->pLeftChild->pLeftChild->pLeftChild;
-    // printf("%d ", test->key);
-    // test = root->pLeftChild->pLeftChild->pRightChild;
-    // printf("%d ", test->key);
-
-    // test = root->pLeftChild->pRightChild->pLeftChild;
-    // printf("%d ", test->key);
-    return 0;
-}
+recursive call을 이용해 하위 노드들을 먼저 끊어주었다.
