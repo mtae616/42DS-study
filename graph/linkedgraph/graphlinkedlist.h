@@ -16,7 +16,6 @@ typedef struct ListNodeType
 typedef struct LinkedListType
 {
 	int currentElementCount;	// ���� ����� ������ ����
-	// pVertex 딱히 필요하진 않음
 	ListNode headerNode;		// ��� ���(Header Node)
 } LinkedList;
 

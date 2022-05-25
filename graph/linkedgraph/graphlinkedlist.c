@@ -13,17 +13,16 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 	ListNode	*temp;
 	ListNode	*buf;
 
+	if (pList->currentElementCount != position || position < 0)
+		return (FALSE);
 	temp = calloc(1, sizeof(ListNode));
 	*temp = element;
-	temp->data.vertexID = position;
 	temp->pLink = NULL; // element 포인팅하면서 쓰레기 값 들어오는 듯 Stack이라
 	if (!pList->currentElementCount)
 		pList->headerNode.pLink = temp; // header
 	else
 	{
-		buf = pList->headerNode.pLink;
-		while(buf->pLink)
-			buf = buf->pLink;
+		buf = getLLElement(pList, position - 1);
 		buf->pLink = temp;
 	}
 	pList->currentElementCount += 1;
@@ -35,20 +34,16 @@ int removeLLElement(LinkedList* pList, int position)
 	ListNode	*buf;
 	ListNode	*prev;
 
-	if (!(getLLElement(pList, position)) || !(pList->currentElementCount))
+	if (position < 0 || pList->currentElementCount < position)
 		return (FALSE);
-	buf = pList->headerNode.pLink;
-	while(buf->pLink)
-	{
-		if (buf->data.vertexID == position)
-			break ;
-		prev = buf;
-		buf = buf->pLink;
-	}
-	if (buf == pList->headerNode.pLink)
+	buf = getLLElement(pList, position);
+	if (position == 0)
 		pList->headerNode.pLink = buf->pLink;
-	else
+	else if (position < pList->currentElementCount - 1) // link 남아 있으면...
+	{
+		prev = getLLElement(pList, position - 1);
 		prev->pLink = buf->pLink;
+	}
 	free(buf);
 	pList->currentElementCount -= 1;
 	return (TRUE);
@@ -57,13 +52,13 @@ int removeLLElement(LinkedList* pList, int position)
 ListNode* getLLElement(LinkedList* pList, int position)
 {
 	ListNode	*temp;
+	int			i = 0;
 
 	temp = pList->headerNode.pLink;
-	while (temp)
+	while (i < position)
 	{
-		if (temp->data.vertexID == position)
-			break;
 		temp = temp->pLink;
+		i++;
 	}
 	return (temp);
 }
@@ -94,24 +89,30 @@ void deleteLinkedList(LinkedList* pList)
 	free(pList);
 }
 
-int main()
-{
-	LinkedList	*temp = createLinkedList();
-	ListNode	buf;
-	ListNode	*nxt;
+// int main()
+// {
+// 	LinkedList	*temp = createLinkedList();
+// 	ListNode	buf;
+// 	ListNode	*nxt;
 
-	addLLElement(temp, 0, buf);
-	addLLElement(temp, 1, buf);
-	addLLElement(temp, 2, buf);
-	removeLLElement(temp, 0);
+// 	buf.data.vertexID = 1;
+// 	addLLElement(temp, 0, buf);
 
-	nxt = temp->headerNode.pLink;
-	for(int i = 0; i < temp->currentElementCount; i++)
-	{
-		printf("%d", nxt->data.vertexID);
-		nxt = nxt->pLink;
-	}
-	// deleteLinkedList(temp);
-	// system("leaks a.out");
-	return 0;
-}
+// 	buf.data.vertexID = 2;
+// 	addLLElement(temp, 1, buf);
+
+// 	buf.data.vertexID = 3;
+// 	addLLElement(temp, 2, buf);
+	
+// 	removeLLElement(temp, 0);
+
+// 	nxt = temp->headerNode.pLink;
+// 	for(int i = 0; i < temp->currentElementCount; i++)
+// 	{
+// 		printf("%d ", nxt->data.vertexID);
+// 		nxt = nxt->pLink;
+// 	}
+// 	// deleteLinkedList(temp);
+// 	// system("leaks a.out");
+// 	return 0;
+// }

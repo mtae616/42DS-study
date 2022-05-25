@@ -7,13 +7,26 @@ ArrayGraph* createArrayGraph(int maxVertexCount)
 	temp = calloc(1, sizeof(ArrayGraph));
 	temp->ppAdjEdge = calloc(maxVertexCount, sizeof(int *));
 	temp->maxVertexCount = maxVertexCount;
+	temp->graphType = 0;
 	for (int i = 0; i < temp->maxVertexCount; i++)
 		temp->ppAdjEdge[i] = calloc(maxVertexCount, sizeof(int));
 	temp->pVertex = calloc(maxVertexCount, sizeof(int));
 	return (temp);
 }
 
-ArrayGraph* createArrayDirectedGraph(int maxVertexCount);
+ArrayGraph* createArrayDirectedGraph(int maxVertexCount)
+{
+	ArrayGraph *temp;
+
+	temp = calloc(1, sizeof(ArrayGraph));
+	temp->ppAdjEdge = calloc(maxVertexCount, sizeof(int *));
+	temp->maxVertexCount = maxVertexCount;
+	temp->graphType = 1;
+	for (int i = 0; i < temp->maxVertexCount; i++)
+		temp->ppAdjEdge[i] = calloc(maxVertexCount, sizeof(int));
+	temp->pVertex = calloc(maxVertexCount, sizeof(int));
+	return (temp);
+}
 
 void deleteArrayGraph(ArrayGraph* pGraph)
 {
