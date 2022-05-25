@@ -12,7 +12,6 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 {
 	ListNode	*temp;
 	ListNode	*buf;
-	int			i = 1;
 
 	temp = calloc(1, sizeof(ListNode));
 	*temp = element;
