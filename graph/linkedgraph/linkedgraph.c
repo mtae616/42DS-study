@@ -137,19 +137,17 @@ void displayLinkedGraph(LinkedGraph* pGraph)
 	}
 }
 
-int main()
-{
-	LinkedGraph	*temp;
+// int main()
+// {
+// 	LinkedGraph	*temp;
 
-	temp = createLinkedGraph(10);
-	addVertexLG(temp, 0);
-	addVertexLG(temp, 1);
-	addVertexLG(temp, 2);
+// 	temp = createLinkedGraph(10);
+// 	addVertexLG(temp, 0);
+// 	addVertexLG(temp, 1);
+// 	addVertexLG(temp, 2);
 
-	addEdgeLG(temp, 0, 1);
-	addEdgeLG(temp, 0, 2);
-	removeVertexLG(temp, 1);
-	displayLinkedGraph(temp);
+// 	addEdgeLG(temp, 0, 1);
+// 	addEdgeLG(temp, 0, 2);
 
-	return 0;
-}
+// 	return 0;
+// }
