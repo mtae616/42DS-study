@@ -17,7 +17,7 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 	temp = calloc(1, sizeof(ListNode));
 	*temp = element;
 	temp->data.vertexID = position;
-	temp->pLink = NULL;
+	temp->pLink = NULL; // element 포인팅하면서 쓰레기 값 들어오는 듯 Stack이라
 	if (!pList->currentElementCount)
 		pList->headerNode.pLink = temp; // header
 	else
