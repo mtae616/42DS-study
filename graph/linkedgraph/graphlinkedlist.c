@@ -37,6 +37,8 @@ int removeLLElement(LinkedList* pList, int position)
 	if (position < 0 || pList->currentElementCount < position)
 		return (FALSE);
 	buf = getLLElement(pList, position);
+	if (!buf)
+		return (FALSE);
 	if (position == 0)
 		pList->headerNode.pLink = buf->pLink;
 	else if (position < pList->currentElementCount - 1) // link 남아 있으면...

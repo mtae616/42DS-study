@@ -57,7 +57,7 @@ int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, i
 	ListNode	temp = {0, };
 	LinkedList	*buf;
 
-	if (checkVertexValid(pGraph, fromVertexID) || checkVertexValid(pGraph, toVertexID))
+	if (!checkVertexValid(pGraph, fromVertexID) || !checkVertexValid(pGraph, toVertexID))
 		return (FALSE);
 	temp.data.vertexID = toVertexID;
 	temp.data.weight = weight;
@@ -77,13 +77,79 @@ int checkVertexValid(LinkedGraph* pGraph, int vertexID)
 	return pGraph->pVertex[vertexID];
 }
 
-int removeVertexLG(LinkedGraph* pGraph, int vertexID);
+int removeVertexLG(LinkedGraph* pGraph, int vertexID)
+{
+	LinkedList	*temp;
 
-int removeEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID);
+	if (!checkVertexValid(pGraph, vertexID))
+		return (FALSE);
+	temp = pGraph->ppAdjEdge[vertexID];
+	for (int i = 0; i < pGraph->maxVertexCount; i++)
+	{
+		removeEdgeLG(pGraph, i, vertexID);
+		if (pGraph->graphType == 1)
+			removeEdgeLG(pGraph, vertexID, i);
+	}
+	pGraph->pVertex[vertexID] = 0;
+	return (TRUE);
+}
 
-void displayLinkedGraph(LinkedGraph* pGraph);
+int	findById(LinkedList *pList, int vertexID)
+{
+	int	i = 0;
+	ListNode	*temp;
 
-// int main()
-// {
-// 	return 0;
-// }
+	temp = pList->headerNode.pLink;
+	while(temp)
+	{
+		if (temp->data.vertexID == vertexID)
+			break ;
+		temp = temp->pLink;
+		i++;
+	}
+	return i;
+}
+
+int removeEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID)
+{
+	if (!checkVertexValid(pGraph, fromVertexID) || !checkVertexValid(pGraph, toVertexID))
+		return (FALSE);
+	removeLLElement(pGraph->ppAdjEdge[fromVertexID], findById(pGraph->ppAdjEdge[fromVertexID], toVertexID));
+	if (pGraph->graphType == 0)
+		removeLLElement(pGraph->ppAdjEdge[toVertexID], findById(pGraph->ppAdjEdge[toVertexID], fromVertexID));
+	return 0;
+}
+
+void displayLinkedGraph(LinkedGraph* pGraph)
+{
+	LinkedList	*temp;
+	ListNode	*buf;
+
+	for (int i = 0; i < pGraph->currentVertexCount; i++)
+	{
+		temp = pGraph->ppAdjEdge[i];
+		buf = temp->headerNode.pLink;
+		for(int j = 0; j < temp->currentElementCount; j++)
+		{
+			printf("from : %d to : %d \n", i, buf->data.vertexID);
+			buf = buf->pLink;
+		}
+	}
+}
+
+int main()
+{
+	LinkedGraph	*temp;
+
+	temp = createLinkedGraph(10);
+	addVertexLG(temp, 0);
+	addVertexLG(temp, 1);
+	addVertexLG(temp, 2);
+
+	addEdgeLG(temp, 0, 1);
+	addEdgeLG(temp, 0, 2);
+	removeVertexLG(temp, 1);
+	displayLinkedGraph(temp);
+
+	return 0;
+}
