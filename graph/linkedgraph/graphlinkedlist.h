@@ -3,8 +3,8 @@
 
 typedef struct GraphVertexType
 {
-	int vertexID;		// ³ëµå ID
-	int weight;			// °¡ÁßÄ¡.
+	int vertexID;		// ï¿½ï¿½ï¿½ ID
+	int weight;			// ï¿½ï¿½ï¿½ï¿½Ä¡.
 } GraphVertex;
 
 typedef struct ListNodeType
@@ -15,9 +15,13 @@ typedef struct ListNodeType
 
 typedef struct LinkedListType
 {
-	int currentElementCount;	// ÇöÀç ÀúÀåµÈ ¿ø¼ÒÀÇ °³¼ö
-	ListNode headerNode;		// Çì´õ ³ëµå(Header Node)
+	int currentElementCount;	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// pVertex ë”±íˆ í•„ìš”í•˜ì§„ ì•ŠìŒ
+	ListNode headerNode;		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(Header Node)
 } LinkedList;
+
+#include <stdlib.h>
+#include <stdio.h>
 
 LinkedList* createLinkedList();
 int addLLElement(LinkedList* pList, int position, ListNode element);

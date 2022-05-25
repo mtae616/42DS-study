@@ -7,7 +7,9 @@ ArrayGraph* createArrayGraph(int maxVertexCount)
 	temp = calloc(1, sizeof(ArrayGraph));
 	temp->ppAdjEdge = calloc(maxVertexCount, sizeof(int *));
 	temp->maxVertexCount = maxVertexCount;
-	temp->pVertex = calloc(maxVertexCount, sizeof(int *));
+	for (int i = 0; i < temp->maxVertexCount; i++)
+		temp->ppAdjEdge[i] = calloc(maxVertexCount, sizeof(int));
+	temp->pVertex = calloc(maxVertexCount, sizeof(int));
 	return (temp);
 }
 
@@ -34,7 +36,7 @@ int addVertexAG(ArrayGraph* pGraph, int vertexID)
 	return (TRUE);
 }
 
-int addEdgeAG(ArrayGraph* pGraph, int fromVertexID, int toVertexID)
+int addEdgeAG(ArrayGraph* pGraph, int fromVertexID, int toVertexID) // undirected
 {
 	if (fromVertexID < 0 || fromVertexID > pGraph->maxVertexCount)
 		return (FALSE);
@@ -45,7 +47,7 @@ int addEdgeAG(ArrayGraph* pGraph, int fromVertexID, int toVertexID)
 	return (TRUE);
 }
 
-int addEdgewithWeightAG(ArrayGraph* pGraph, int fromVertexID, int toVertexID, int weight)
+int addEdgewithWeightAG(ArrayGraph* pGraph, int fromVertexID, int toVertexID, int weight) // directed
 {
 	if (fromVertexID < 0 || fromVertexID > pGraph->maxVertexCount)
 		return (FALSE);
