@@ -22,6 +22,8 @@ LinkedGraph* createLinkedDirectedGraph(int maxVertexCount)
 	temp->graphType = 1;
 	temp->pVertex = calloc(maxVertexCount, sizeof(int));
 	temp->ppAdjEdge = calloc(maxVertexCount, sizeof(LinkedList *));
+	for (int i = 0; i < maxVertexCount; i++)
+		temp->ppAdjEdge[i] = createLinkedList();
 	return (temp);
 }
 
