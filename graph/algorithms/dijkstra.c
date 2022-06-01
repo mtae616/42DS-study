@@ -11,7 +11,7 @@ void	dijkstra(LinkedGraph *graph, int from)
 	HeapNode	insertNode = {0, };
 	ListNode	*temp;
 	
-	for(int i = graph->maxVertexCount; i > 0; i--)
+	for(int i = graph->maxVertexCount - 1; i >= 0; i--)
 		dp[i] = INF;
 	dp[from] = 0;
 	buf.key = 0;
@@ -29,7 +29,6 @@ void	dijkstra(LinkedGraph *graph, int from)
 				insertNode.key = dp[temp->data.vertexID];
 				insertNode.idx = temp->data.vertexID;
 				insertMinHeapNode(heap, insertNode);
-
 			}
 			temp = temp->pLink;
 		}
