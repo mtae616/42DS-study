@@ -133,7 +133,7 @@ void displayLinkedGraph(LinkedGraph* pGraph)
 		buf = temp->headerNode.pLink;
 		for(int j = 0; j < temp->currentElementCount; j++)
 		{
-			printf("from : %d to : %d \n", i, buf->data.vertexID);
+			printf("from : %d to : %d  weight : %d\n", i, buf->data.vertexID, buf->data.weight);
 			buf = buf->pLink;
 		}
 	}
