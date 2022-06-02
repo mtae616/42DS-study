@@ -7,6 +7,7 @@ typedef struct LinkedGraphType
 {
 	int maxVertexCount;		
 	int currentVertexCount;	
+	int currentEdgeCount;
 	int graphType;			
 	LinkedList **ppAdjEdge;		
 	int *pVertex;			

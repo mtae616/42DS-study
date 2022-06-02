@@ -14,8 +14,6 @@ void	dijkstra(LinkedGraph *graph, int from)
 	for(int i = graph->maxVertexCount - 1; i >= 0; i--)
 		dp[i] = INF;
 	dp[from] = 0;
-	buf.key = 0;
-	buf.idx = 0;
 	insertMinHeapNode(heap, buf);
 	while (getMinHeapLength(heap) != 0)
 	{
@@ -37,23 +35,23 @@ void	dijkstra(LinkedGraph *graph, int from)
 		printf("%d ", dp[i]);
 }
 
-int main()
-{
-	LinkedGraph *graph = createLinkedGraph(6);
-	for(int i = 0; i < 6; i++)
-		addVertexLG(graph, i);
+// int main()
+// {
+// 	LinkedGraph *graph = createLinkedGraph(6);
+// 	for(int i = 0; i < 6; i++)
+// 		addVertexLG(graph, i);
 	
-	addEdgewithWeightLG(graph, 0, 1, 1);
-	addEdgewithWeightLG(graph, 0, 2, 4);
-	addEdgewithWeightLG(graph, 1, 2, 2);
-	addEdgewithWeightLG(graph, 2, 3, 1);
-	addEdgewithWeightLG(graph, 3, 4, 8);
-	addEdgewithWeightLG(graph, 3, 5, 3);
-	addEdgewithWeightLG(graph, 4, 5, 4);
+// 	addEdgewithWeightLG(graph, 0, 1, 1);
+// 	addEdgewithWeightLG(graph, 0, 2, 4);
+// 	addEdgewithWeightLG(graph, 1, 2, 2);
+// 	addEdgewithWeightLG(graph, 2, 3, 1);
+// 	addEdgewithWeightLG(graph, 3, 4, 8);
+// 	addEdgewithWeightLG(graph, 3, 5, 3);
+// 	addEdgewithWeightLG(graph, 4, 5, 4);
 
-	// displayLinkedGraph(graph);
+// 	// displayLinkedGraph(graph);
 
-	dijkstra(graph, 0);
+// 	dijkstra(graph, 0);
 
-	return 0;
-}
+// 	return 0;
+// }

@@ -71,6 +71,7 @@ int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, i
 		buf = pGraph->ppAdjEdge[toVertexID];
 		addLLElement(buf, buf->currentElementCount, temp);
 	}
+	pGraph->currentEdgeCount += 1;
 	return (TRUE);
 }
 
@@ -119,6 +120,7 @@ int removeEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID)
 	removeLLElement(pGraph->ppAdjEdge[fromVertexID], findById(pGraph->ppAdjEdge[fromVertexID], toVertexID));
 	if (pGraph->graphType == 0)
 		removeLLElement(pGraph->ppAdjEdge[toVertexID], findById(pGraph->ppAdjEdge[toVertexID], fromVertexID));
+	pGraph->currentEdgeCount -= 1;
 	return 0;
 }
 
