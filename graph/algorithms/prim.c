@@ -1,4 +1,36 @@
 #include "../linkedgraph/linkedgraph.h"
+#include "./stack/linkedstack.h"
+
+int traversal_dfs(LinkedGraph *graph, int from, int to)
+{
+	int *visited = calloc(graph->maxVertexCount, sizeof(int));
+	LinkedStack	*stack = calloc(1, sizeof(LinkedStack));
+	ListNode	*temp;
+	StackNode	buf;
+	StackNode	*stackNode;
+
+	buf.data = from;
+	pushLS(stack, buf);
+	visited[from] = 1;
+	while(!isLinkedStackEmpty(stack))
+	{
+		stackNode = popLS(stack);
+		if (stackNode->data == to)
+			return (FALSE);
+		temp = graph->ppAdjEdge[stackNode->data]->headerNode.pLink;
+		while(temp)
+		{
+			if (!visited[temp->data.vertexID])
+			{
+				visited[temp->data.vertexID] = 1;
+				buf.data = temp->data.vertexID;
+				pushLS(stack, buf);
+			}
+			temp = temp->pLink;
+		}
+	}
+	return (TRUE);
+}
 
 void	prim(LinkedGraph *graph)
 {
@@ -29,7 +61,6 @@ void	prim(LinkedGraph *graph)
 			addVertexLG(ret, id);
 			addVertexLG(ret, i);
 			addEdgewithWeightLG(ret, i, id, min);
-			addEdgewithWeightLG(ret, id, i, min);
 			selected[i] = 0;
 		}
 		i++;
