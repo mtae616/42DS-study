@@ -44,14 +44,15 @@ void	display(int **arr, int length)
 void	floyd(LinkedGraph *graph)
 {
 	int	**arr = arr_init(graph);
-	for(int i = 0; i < graph->maxVertexCount; i++)
+	
+	for (int k = 0; k < graph->maxVertexCount; k++)
 	{
 		for(int j = 0; j < graph->maxVertexCount; j++)
 		{
-			for (int k = 0; k < graph->maxVertexCount; k++)
+			for(int i = 0; i < graph->maxVertexCount; i++)		
 			{
-				if (arr[j][k] > arr[j][i] + arr[i][k])
-					arr[j][k] = arr[j][i] + arr[i][k];
+				if (arr[i][j] > arr[i][k] + arr[k][j])
+					arr[i][j] = arr[i][k] + arr[k][j];
 			}
 		}
 	}
