@@ -36,22 +36,22 @@ void	prim(LinkedGraph *graph)
 	displayLinkedGraph(ret);
 }
 
-int main()
-{
-	LinkedGraph *graph = createLinkedGraph(6);
-	for(int i = 0; i < 6; i++)
-		addVertexLG(graph, i);
+// int main()
+// {
+// 	LinkedGraph *graph = createLinkedGraph(6);
+// 	for(int i = 0; i < 6; i++)
+// 		addVertexLG(graph, i);
 	
-	addEdgewithWeightLG(graph, 0, 1, 4);
-	addEdgewithWeightLG(graph, 0, 2, 3);
-	addEdgewithWeightLG(graph, 1, 2, 2);
-	addEdgewithWeightLG(graph, 2, 3, 1);
-	addEdgewithWeightLG(graph, 3, 4, 1);
-	addEdgewithWeightLG(graph, 3, 5, 5);
-	addEdgewithWeightLG(graph, 4, 5, 6);
+// 	addEdgewithWeightLG(graph, 0, 1, 4);
+// 	addEdgewithWeightLG(graph, 0, 2, 3);
+// 	addEdgewithWeightLG(graph, 1, 2, 2);
+// 	addEdgewithWeightLG(graph, 2, 3, 1);
+// 	addEdgewithWeightLG(graph, 3, 4, 1);
+// 	addEdgewithWeightLG(graph, 3, 5, 5);
+// 	addEdgewithWeightLG(graph, 4, 5, 6);
 
-	// displayLinkedGraph(graph);
+// 	// displayLinkedGraph(graph);
 
-	prim(graph);
-	return 0;
-}
+// 	prim(graph);
+// 	return 0;
+// }
