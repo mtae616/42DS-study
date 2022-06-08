@@ -3,19 +3,20 @@
 void	prim(LinkedGraph *graph)
 {
 	LinkedGraph	*ret = createLinkedGraph(graph->maxVertexCount);
+	// 값을 저장할 그래프
 	int	selected[graph->maxVertexCount];
 	ListNode	*temp;
 	int INF = 999999999;
 	int			i = 0;
 
 	for(int i = 0; i < graph->maxVertexCount; i++)
-		selected[i] = INF;
+		selected[i] = INF; // 선택되지 않은 값들은 INF로 한다.
 	while (i < graph->maxVertexCount)
 	{
 		temp = graph->ppAdjEdge[i]->headerNode.pLink;
 		int min = 999999999;
 		int id = temp->data.vertexID;
-		while(temp)
+		while(temp) // 노드 간 최소 값을 구한다.
 		{	
 			if (selected[i] && min > temp->data.weight)
 			{
@@ -24,7 +25,8 @@ void	prim(LinkedGraph *graph)
 			}
 			temp = temp->pLink;
 		}
-		if (selected[i] && min != INF)
+		if (selected[i] && min != INF) 
+		// 선택되지 않았고, 최소값이 INF가 아니라면 ret에 저장해준다.
 		{
 			addVertexLG(ret, id);
 			addVertexLG(ret, i);
@@ -35,23 +37,3 @@ void	prim(LinkedGraph *graph)
 	}
 	displayLinkedGraph(ret);
 }
-
-// int main()
-// {
-// 	LinkedGraph *graph = createLinkedGraph(6);
-// 	for(int i = 0; i < 6; i++)
-// 		addVertexLG(graph, i);
-	
-// 	addEdgewithWeightLG(graph, 0, 1, 4);
-// 	addEdgewithWeightLG(graph, 0, 2, 3);
-// 	addEdgewithWeightLG(graph, 1, 2, 2);
-// 	addEdgewithWeightLG(graph, 2, 3, 1);
-// 	addEdgewithWeightLG(graph, 3, 4, 1);
-// 	addEdgewithWeightLG(graph, 3, 5, 5);
-// 	addEdgewithWeightLG(graph, 4, 5, 6);
-
-// 	// displayLinkedGraph(graph);
-
-// 	prim(graph);
-// 	return 0;
-// }

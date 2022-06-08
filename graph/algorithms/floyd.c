@@ -43,37 +43,19 @@ void	display(int **arr, int length)
 
 void	floyd(LinkedGraph *graph)
 {
-	int	**arr = arr_init(graph);
+	int	**arr = arr_init(graph); // 결과 그래프를 초기화한다.
 	
-	for (int k = 0; k < graph->maxVertexCount; k++)
+	for (int k = 0; k < graph->maxVertexCount; k++) // 꼭짓점 K
 	{
 		for(int j = 0; j < graph->maxVertexCount; j++)
 		{
 			for(int i = 0; i < graph->maxVertexCount; i++)		
 			{
-				if (arr[i][j] > arr[i][k] + arr[k][j])
+				if (arr[i][j] > arr[i][k] + arr[k][j]) 
+				// (i,j) 가 (i,k) + (k,j)보다 크다면 업데이트한다.
 					arr[i][j] = arr[i][k] + arr[k][j];
 			}
 		}
 	}
 	display(arr, graph->maxVertexCount);
-}
-
-int main()
-{
-	LinkedGraph *graph = createLinkedGraph(6);
-	for(int i = 0; i < 6; i++)
-		addVertexLG(graph, i);
-
-	addEdgewithWeightLG(graph, 0, 1, 4);
-	addEdgewithWeightLG(graph, 0, 2, 3);
-	addEdgewithWeightLG(graph, 1, 2, 2);
-	addEdgewithWeightLG(graph, 2, 3, 1);
-	addEdgewithWeightLG(graph, 3, 4, 1);
-	addEdgewithWeightLG(graph, 3, 5, 5);
-	addEdgewithWeightLG(graph, 4, 5, 6);
-
-	floyd(graph);
-
-	return 0;
 }

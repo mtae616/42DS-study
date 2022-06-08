@@ -12,9 +12,9 @@ void	dijkstra(LinkedGraph *graph, int from)
 	ListNode	*temp;
 	
 	for(int i = graph->maxVertexCount - 1; i >= 0; i--)
-		dp[i] = INF;
-	dp[from] = 0;
-	insertMinHeapNode(heap, buf);
+		dp[i] = INF; // 배열의 모든 값은 무한대로 설정한다.
+	dp[from] = 0; // 시작점은 0으로 한다.
+	insertMinHeapNode(heap, buf); // 시작점을 min heap 에 넣어준다.
 	while (getMinHeapLength(heap) != 0)
 	{
 		buf = popMinHeapNode(heap);
@@ -22,11 +22,13 @@ void	dijkstra(LinkedGraph *graph, int from)
 		while(temp)
 		{
 			if (dp[temp->data.vertexID] > temp->data.weight + buf.key)
+			// 만약 배열에 저장 된 값보다 작다면
 			{
 				dp[temp->data.vertexID] = temp->data.weight + buf.key;
 				insertNode.key = dp[temp->data.vertexID];
 				insertNode.idx = temp->data.vertexID;
 				insertMinHeapNode(heap, insertNode);
+				// 업데이트 하고, 힙에 넣어주며 더 짧은 거리가 있는지 확인한다.
 			}
 			temp = temp->pLink;
 		}
@@ -34,24 +36,3 @@ void	dijkstra(LinkedGraph *graph, int from)
 	for (int i = 0; i < 6; i++)
 		printf("%d ", dp[i]);
 }
-
-// int main()
-// {
-// 	LinkedGraph *graph = createLinkedGraph(6);
-// 	for(int i = 0; i < 6; i++)
-// 		addVertexLG(graph, i);
-	
-// 	addEdgewithWeightLG(graph, 0, 1, 1);
-// 	addEdgewithWeightLG(graph, 0, 2, 4);
-// 	addEdgewithWeightLG(graph, 1, 2, 2);
-// 	addEdgewithWeightLG(graph, 2, 3, 1);
-// 	addEdgewithWeightLG(graph, 3, 4, 8);
-// 	addEdgewithWeightLG(graph, 3, 5, 3);
-// 	addEdgewithWeightLG(graph, 4, 5, 4);
-
-// 	// displayLinkedGraph(graph);
-
-// 	dijkstra(graph, 0);
-
-// 	return 0;
-// }

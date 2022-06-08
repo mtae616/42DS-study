@@ -2,7 +2,9 @@
 #include "./minheap_kruskal/minheap.h"
 #include "./stack/linkedstack.h"
 
-Heap	*sorted_heap(LinkedGraph *graph)
+Heap	*sorted_heap(LinkedGraph *graph) 
+// 간선의 가중치를 기준으로 최소로 정렬한다.
+// 여기에선 key가 가중치가 된다.
 {
 	Heap	*temp = createHeap(graph->currentEdgeCount);
 	ListNode	*listNode;
@@ -27,6 +29,8 @@ Heap	*sorted_heap(LinkedGraph *graph)
 }
 
 int traversal_dfs(LinkedGraph *graph, int from, int to)
+// 만약 자기자신이 갖고 있는 정점이 연결하려는 to와 갖다면 연결하지 않는다.
+// 이를 위해 dfs로 확인한다.
 {
 	int *visited = calloc(graph->maxVertexCount, sizeof(int));
 	LinkedStack	*stack = calloc(1, sizeof(LinkedStack));
@@ -67,8 +71,10 @@ void kruskal(LinkedGraph *graph)
 
 	for(int i = 0; i < graph->currentEdgeCount; i++)
 	{
-		buf = popMinHeapNode(heap);
+		buf = popMinHeapNode(heap); 
+		// 간선의 가중치가 오름차순 정렬이 되어있으므로 작은 값부터 연결해준다.
 		if (traversal_dfs(ret, buf.from, buf.to))
+		// 사이클이 발생하지 않았다면 ret이라는 그래프에 삽입한다.
 		{
 			addVertexLG(ret, buf.from);
 			addVertexLG(ret, buf.to);
@@ -77,25 +83,3 @@ void kruskal(LinkedGraph *graph)
 	}
 	displayLinkedGraph(ret);
 }
-
-// int main()
-// {
-// 	LinkedGraph *graph = createLinkedGraph(6);
-// 	for(int i = 0; i < 6; i++)
-// 		addVertexLG(graph, i);
-	
-// 	addEdgewithWeightLG(graph, 0, 1, 4);
-// 	addEdgewithWeightLG(graph, 0, 2, 3);
-// 	addEdgewithWeightLG(graph, 1, 2, 2);
-// 	addEdgewithWeightLG(graph, 2, 3, 1);
-// 	addEdgewithWeightLG(graph, 3, 4, 1);
-// 	addEdgewithWeightLG(graph, 3, 5, 5);
-// 	addEdgewithWeightLG(graph, 4, 5, 6);
-
-// 	// displayLinkedGraph(graph);
-
-// 	kruskal(graph);
-	
-
-// 	return 0;
-// }
