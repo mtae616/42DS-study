@@ -21,15 +21,15 @@ void radix_sort(int arr[], int size)
 	}
 }
 
-int main()
-{
-	int arr[] = {80, 50, 70, 10, 60, 20, 40, 30};
+// int main()
+// {
+// 	int arr[] = {80, 50, 70, 10, 60, 20, 40, 30};
 
-	radix_sort(arr, sizeof(arr) / sizeof(int));
+// 	radix_sort(arr, sizeof(arr) / sizeof(int));
 
-	for(int i = 0; i < 8; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
+// 	for(int i = 0; i < 8; i++)
+// 		printf("%d ", arr[i]);
+// 	printf("\n");
 
-	return 0;
-}
+// 	return 0;
+// }

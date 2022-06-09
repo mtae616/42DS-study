@@ -55,13 +55,13 @@ void merge_sort(int *arr, int left, int right)
 	}
 }
 
-int main()
-{
-	int arr[] = {80, 50, 70, 10, 60, 20, 40, 30};
+// int main()
+// {
+// 	int arr[] = {80, 50, 70, 10, 60, 20, 40, 30};
 
-	merge_sort(arr, 0, sizeof(arr) / sizeof(int) - 1);
-	for(int i = 0; i < 8; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-	return 0;
-}
+// 	merge_sort(arr, 0, sizeof(arr) / sizeof(int) - 1);
+// 	for(int i = 0; i < 8; i++)
+// 		printf("%d ", arr[i]);
+// 	printf("\n");
+// 	return 0;
+// }
