@@ -19,7 +19,6 @@ void heap(int *arr, int size){
     }
 }
 
-
 int main()
 {
 	int arr[] = {80, 50, 70, 10, 60, 20, 40, 30};
