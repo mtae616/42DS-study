@@ -14,15 +14,14 @@ void merge(int *arr, int left, int right, int pivot)
 		if (arr[L] <= arr[R])
 		{
 			temp[n] = arr[L];
-			n++;
 			L++;
 		}
 		else
 		{
 			temp[n] = arr[R];
-			n++;
 			R++;
 		}
+		n++;
 	}
 	if (L > pivot)
 	{
