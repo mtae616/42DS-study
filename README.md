@@ -1,7 +1,5 @@
 # 42 data structure study
 
-<br />
-
 ## Mentor : Eunjong Park @42Seoul
 
 <br />
